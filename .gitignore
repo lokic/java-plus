@@ -1,3 +1,11 @@
+### JetBrains
+.idea/
+*.iml
+**/out
+html
+*.ipr
+*.iws
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
