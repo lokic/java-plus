@@ -15,10 +15,6 @@ public class Streams {
 
     /**
      * 返回一个不包含null的Stream
-     *
-     * @param values
-     * @param <T>
-     * @return
      */
     public static <T> Stream<T> ofNullable(T... values) {
         return Stream.of(values)
@@ -30,10 +26,6 @@ public class Streams {
      * <p>
      * Note:
      * {@code optValues} 中每一个{@code Optional<T> } 元素都不能为null
-     *
-     * @param optValues
-     * @param <T>
-     * @return
      */
     public static <T> Stream<T> ofNullable(Optional<T>... optValues) {
         return Stream.of(optValues)
@@ -46,10 +38,6 @@ public class Streams {
      * <p>
      * 在 {@code Stream<T>} 的流中，{@link Stream#flatMap(Function)} 的方法上，
      * 通过该方法 {@link #ofNullable(Object)} )} 把 {@code value} 扁平化。
-     *
-     * @param value
-     * @param <T>
-     * @return
      */
     public static <T> Stream<T> ofNullable(T value) {
         return value == null ? Stream.empty() : Stream.of(value);
@@ -61,10 +49,6 @@ public class Streams {
      * <p>
      * 在 {@code Stream<Optional<T>>} 的流中，{@link Stream#flatMap(Function)} 的方法上，
      * 通过该方法 {@link #ofNullable(Optional)} 把 {@code option} 扁平化。
-     *
-     * @param option
-     * @param <T>
-     * @return
      */
     public static <T> Stream<T> ofNullable(@NonNull Optional<T> option) {
         return option.map(Stream::of).orElseGet(Stream::empty);
@@ -73,10 +57,6 @@ public class Streams {
     /**
      * 把 {@link Collection} 转换成 {@link Stream}，
      * 如果 {@link Collection} 为 null， 则返回 {@link Stream#empty()}
-     *
-     * @param values
-     * @param <T>
-     * @return
      */
     public static <T> Stream<T> ofNullable(Collection<T> values) {
         return values == null ? Stream.empty() : values.stream();
@@ -84,11 +64,6 @@ public class Streams {
 
     /**
      * 能在Stream中更加方便得使用方法引用，  {@code Function<T, Collection<R>> ==> Function<T,Stream<R>> }
-     *
-     * @param function
-     * @param <T>
-     * @param <R>
-     * @return
      */
     public static <T, R> Function<T, Stream<R>> ofCollectionNullable(Function<T, Collection<R>> function) {
         return t -> ofNullable(function.apply(t));
@@ -96,11 +71,6 @@ public class Streams {
 
     /**
      * 能在Stream中更加方便得使用方法引用，  {@code Function<T, R> ==> Function<T,Stream<R>> }
-     *
-     * @param function
-     * @param <T>
-     * @param <R>
-     * @return
      */
     public static <T, R> Function<T, Stream<R>> ofObjectNullable(Function<T, R> function) {
         return t -> ofNullable(function.apply(t));

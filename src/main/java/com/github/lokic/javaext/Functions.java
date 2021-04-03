@@ -16,11 +16,6 @@ public class Functions {
      *          ...
      *      })
      * }</pre>
-     *
-     * @param biFunction
-     * @param <T>
-     * @param <R>
-     * @return
      */
     public static <T, R> Function<T, R> mapWithIndex(BiFunction<Integer, T, R> biFunction) {
         AtomicInteger i = new AtomicInteger();

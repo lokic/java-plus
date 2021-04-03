@@ -26,10 +26,6 @@ public class Types {
      *       Optional<String> opt = Types.cast(o);
      * }</pre>
      * 可以看到，新的写法规避了 {@code Optional<String>} 的2次出现，其可以通过需要赋值的类型进行类型推导
-     *
-     * @param o
-     * @param <T>
-     * @return
      */
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object o) {

@@ -7,8 +7,6 @@
  * 元组相关函数的package：{@link com.github.lokic.javaext.func.tuple}
  * {@link java.util.Map.Entry} 相关函数的package：{@link com.github.lokic.javaext.func.entry}
  * <p>
- * <p>
- * <p>
  * {@link java.util.function.Supplier}相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaext.Lazy}

@@ -13,9 +13,6 @@ public class Collectors {
 
         /**
          * 倒序
-         *
-         * @param <T>
-         * @return
          */
         public static <T> Collector<T, ?, List<T>> reversed() {
             return reversed(Function.identity());
@@ -24,10 +21,6 @@ public class Collectors {
         /**
          * 倒序，并对list进行 {@code finisher} 转换
          *
-         * @param finisher
-         * @param <T>
-         * @param <R>
-         * @return
          */
         public static <T, R> Collector<T, ?, R> reversed(Function<List<T>, R> finisher) {
             return java.util.stream.Collectors.collectingAndThen(java.util.stream.Collectors.toList(), list -> {
@@ -42,10 +35,7 @@ public class Collectors {
         /**
          * 去重复，如果数据存在相同的rule，则保留最新配置的rule
          * <p>
-         * 如，A B A C  => B A C
-         *
-         * @param <T>
-         * @return
+         * 如，before: A B A C   after: B A C
          */
         public static <T> Collector<T, ?, List<T>> distinctLastPut() {
             return distinctByKey(Function.identity(), Order.LAST_PUT, last());
@@ -58,10 +48,7 @@ public class Collectors {
         /**
          * 去重复，如果数据存在相同的rule，则保留最早配置的rule
          * <p>
-         * 如，A B A C  =>  A B C
-         *
-         * @param <T>
-         * @return
+         * 如，before: A B A C  after: A B C
          */
         public static <T> Collector<T, ?, List<T>> distinctFirstPut() {
             return distinctByKey(Function.identity(), Order.FIRST_PUT, first());
@@ -72,10 +59,6 @@ public class Collectors {
          * <p>
          * Note：
          * 也可以使用 {@link Predicates#distinctByKey(Function)}，以获得更好的性能
-         *
-         * @param keyExtractor
-         * @param <T>
-         * @return
          */
         public static <T> Collector<T, ?, List<T>> distinctFirstPutByKey(Function<? super T, ?> keyExtractor) {
             return distinctByKey(keyExtractor, Order.FIRST_PUT, first());

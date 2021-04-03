@@ -10,8 +10,6 @@ import java.util.function.Supplier;
 
 /**
  * 对POJO提供的通用builder，也可以作为对POJO提供fluent风格的setter
- *
- * @param <T>
  */
 public class Builder<T> {
 

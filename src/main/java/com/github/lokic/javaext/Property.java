@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
  *     }
  * }</pre>
  *
- * @param <T>
- * @param <K>
+ * @param <T> 泛型类
+ * @param <K> 转换之后的key
  */
 public class Property<T extends Enum<T>, K> {
 

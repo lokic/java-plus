@@ -12,8 +12,8 @@ public class Optionals {
      * <p>
      * java8中在不需要返回值的情况下，缺少同时对{@link Optional} 中有值和没值2种情况的处理的方法，所以定义了这个方法，
      * 如果2种情况都需要处理，同时定义更加符合函数式编程的风格。
-     *
-     * <p> <p> 不建议使用了，可以用如下代码实现相同功能
+     * <p>
+     * 不建议使用了，可以用如下代码实现相同功能
      * <pre>
      * {@code Optional.of("")
      *          .<Runnable>map(x -> ()  -> {
@@ -27,11 +27,6 @@ public class Optionals {
      * <p>
      * See also: 可以使用 {@link Consumers#toRunnable(Consumer)} 转换Consumer到Runnable
      * <p>
-     *
-     * @param c
-     * @param r
-     * @param <T>
-     * @return
      */
     public static <T> OptionalConsumer<T> ifPresentOrElse(Consumer<T> c, Runnable r) {
         return new OptionalConsumer<>(c, r);
