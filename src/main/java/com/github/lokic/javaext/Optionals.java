@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class OptionalExt {
+public class Optionals {
 
     /**
      * 在java8中，{@link Optional} 只有 {@link Optional#ifPresent(Consumer)} 和 {@link Optional#orElseGet(Supplier)}，
@@ -25,7 +25,7 @@ public class OptionalExt {
      *          .run();}
      * </pre>
      * <p>
-     * See also: 可以使用 {@link ConsumerExt#toRunnable(Consumer)} 转换Consumer到Runnable
+     * See also: 可以使用 {@link Consumers#toRunnable(Consumer)} 转换Consumer到Runnable
      * <p>
      *
      * @param c

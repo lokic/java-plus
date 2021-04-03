@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-public class CollectorExt {
+public class Collectors {
 
     public static class Reversed {
 
@@ -31,7 +30,7 @@ public class CollectorExt {
          * @return
          */
         public static <T, R> Collector<T, ?, R> reversed(Function<List<T>, R> finisher) {
-            return Collectors.collectingAndThen(Collectors.toList(), list -> {
+            return java.util.stream.Collectors.collectingAndThen(java.util.stream.Collectors.toList(), list -> {
                 Collections.reverse(list);
                 return finisher.apply(list);
             });
@@ -72,7 +71,7 @@ public class CollectorExt {
          * 基于 {@code keyExtractor} 进行去重，只保存第一个值，之后的都忽略。
          * <p>
          * Note：
-         * 也可以使用 {@link PredicateExt#distinctByKey(Function)}，以获得更好的性能
+         * 也可以使用 {@link Predicates#distinctByKey(Function)}，以获得更好的性能
          *
          * @param keyExtractor
          * @param <T>
@@ -85,16 +84,16 @@ public class CollectorExt {
         private static <T> Collector<T, ?, List<T>> distinctByKey(
                 Function<? super T, ?> keyExtractor, Order order, Function<List<T>, T> finisher) {
 
-            return Collectors.collectingAndThen(
-                    Collectors.groupingBy(
+            return java.util.stream.Collectors.collectingAndThen(
+                    java.util.stream.Collectors.groupingBy(
                             keyExtractor,
                             () -> buildMap(order),
-                            Collectors.toList()
+                            java.util.stream.Collectors.toList()
                     ),
                     res -> res.values()
                             .stream()
                             .map(finisher)
-                            .collect(Collectors.toList()));
+                            .collect(java.util.stream.Collectors.toList()));
         }
 
         private static <K, V> Map<K, V> buildMap(Order order) {

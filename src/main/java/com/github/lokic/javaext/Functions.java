@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class FunctionExt {
+public class Functions {
 
     /**
      * 在某些遍历的场景，可以通过该方法，在 {@code biFunction} 中拿到遍历的下标
@@ -12,7 +12,7 @@ public class FunctionExt {
      * <pre>{@code
      *     List(...)
      *      .stream()
-     *      .map(FunctionEx.mapWithIndex((index, item) -> {
+     *      .map(Functions.mapWithIndex((index, item) -> {
      *          ...
      *      })
      * }</pre>

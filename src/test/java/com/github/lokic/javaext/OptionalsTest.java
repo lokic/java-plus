@@ -5,15 +5,15 @@ import org.mockito.Mockito;
 
 import java.util.Optional;
 
-import static com.github.lokic.javaext.ConsumerExt.toRunnable;
+import static com.github.lokic.javaext.Consumers.toRunnable;
 
 
-public class OptionalExtTest {
+public class OptionalsTest {
 
     @Test
     public void accept_should_executeConsumer_when_optionalHasValue() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
-        OptionalExt.ifPresentOrElse(spyMethod::consumer, spyMethod::run)
+        Optionals.ifPresentOrElse(spyMethod::consumer, spyMethod::run)
                 .accept(Optional.of("123"));
 
         Mockito.verify(spyMethod, Mockito.only()).consumer(Mockito.eq("123"));
@@ -36,7 +36,7 @@ public class OptionalExtTest {
     @Test
     public void accept_should_executeRun_when_optionalIsEmpty() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
-        OptionalExt.ifPresentOrElse(spyMethod::consumer, spyMethod::run)
+        Optionals.ifPresentOrElse(spyMethod::consumer, spyMethod::run)
                 .accept(Optional.empty());
 
         Mockito.verify(spyMethod, Mockito.never()).consumer(Mockito.anyString());

@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class PredicateExt {
+public class Predicates {
 
     /**
      * 基于 {@code keyExtractor}, 来进行去重，只保存第一个值，之后的都忽略。

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class DateExt {
+public class Dates {
 
     public static LocalDateTime dateToLocalDateTime(Date date) {
         Instant instant = date.toInstant();

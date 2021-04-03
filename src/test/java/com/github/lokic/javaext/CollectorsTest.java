@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import java.util.stream.Stream;
 
-public class CollectorExtTest {
+public class CollectorsTest {
 
     @Test
     public void test_distinctFirstPut() {
         Assertions.assertThat(
                 Stream.of("A", "B", "A", "C")
-                        .collect(CollectorExt.Distinct.distinctFirstPut()))
+                        .collect(Collectors.Distinct.distinctFirstPut()))
                 .containsExactly("A", "B", "C");
     }
 
@@ -21,7 +21,7 @@ public class CollectorExtTest {
     public void test_distinctLastPut() {
         Assertions.assertThat(
                 Stream.of("A", "B", "A", "C")
-                        .collect(CollectorExt.Distinct.distinctLastPut()))
+                        .collect(Collectors.Distinct.distinctLastPut()))
                 .containsExactly("B", "A", "C");
     }
 
@@ -29,7 +29,7 @@ public class CollectorExtTest {
     public void test_distinctFirstPutByKey() {
         Assertions.assertThat(
                 Stream.of(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("A", "A2"), new DataInfo("C", "C1"))
-                        .collect(CollectorExt.Distinct.distinctFirstPutByKey(DataInfo::getKey)))
+                        .collect(Collectors.Distinct.distinctFirstPutByKey(DataInfo::getKey)))
                 .containsExactly(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("C", "C1"));
     }
 
@@ -37,7 +37,7 @@ public class CollectorExtTest {
     public void test_distinctLastPutByKey() {
         Assertions.assertThat(
                 Stream.of(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("A", "A2"), new DataInfo("C", "C1"))
-                        .collect(CollectorExt.Distinct.distinctLastPutByKey(DataInfo::getKey)))
+                        .collect(Collectors.Distinct.distinctLastPutByKey(DataInfo::getKey)))
                 .containsExactly(new DataInfo("B", "B1"), new DataInfo("A", "A2"), new DataInfo("C", "C1"));
     }
 

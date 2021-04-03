@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class ConsumerExt {
+public class Consumers {
 
     /**
      * 在遍历的场景，可以通过该方法，在 {@code biConsumer} 中拿到遍历的下标

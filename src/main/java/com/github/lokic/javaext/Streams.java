@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * 对 {@link Stream} 进行的一些方法扩展
  */
-public class StreamExt {
+public class Streams {
 
     /**
      * 返回一个不包含null的Stream
@@ -22,7 +22,7 @@ public class StreamExt {
      */
     public static <T> Stream<T> ofNullable(T... values) {
         return Stream.of(values)
-                .flatMap(StreamExt::ofNullable);
+                .flatMap(Streams::ofNullable);
     }
 
     /**
@@ -38,7 +38,7 @@ public class StreamExt {
     public static <T> Stream<T> ofNullable(Optional<T>... optValues) {
         return Stream.of(optValues)
                 .map(Objects::requireNonNull)
-                .flatMap(StreamExt::ofNullable);
+                .flatMap(Streams::ofNullable);
     }
 
     /**

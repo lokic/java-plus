@@ -17,7 +17,7 @@
  * <p>
  * {@link java.util.function.Function}相关扩展：
  * <ul>
- *      <li>{@link com.github.lokic.javaext.FunctionExt}
+ *      <li>{@link com.github.lokic.javaext.Functions}
  *      <li>{@link com.github.lokic.javaext.func.sneakythrows.SneakyThrowFunction1}
  *      <li>{@link com.github.lokic.javaext.func.sneakythrows.SneakyThrowFunction2}
  *      <li>{@link com.github.lokic.javaext.func.sneakythrows.SneakyThrowFunction3}
@@ -28,7 +28,7 @@
  * <p>
  * {@link java.util.function.Consumer}相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.ConsumerExt}
+ *     <li>{@link com.github.lokic.javaext.Consumers}
  *     <li>{@link com.github.lokic.javaext.func.sneakythrows.SneakyThrowConsumer1}
  *     <li>{@link com.github.lokic.javaext.func.tuple.TupleConsumer2}
  *     <li>{@link com.github.lokic.javaext.func.tuple.TupleConsumer3}
@@ -42,12 +42,12 @@
  * <p>
  * {@link java.util.Optional} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.OptionalExt}
+ *     <li>{@link com.github.lokic.javaext.Optionals}
  * </ul>
  * <p>
  * {@link java.util.stream.Stream} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.StreamExt}
+ *     <li>{@link com.github.lokic.javaext.Streams}
  * </ul>
  * <p>
  * {@link java.lang.Enum} 相关扩展：
@@ -57,18 +57,18 @@
  * <p>
  * {@link java.util.function.Predicate} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.PredicateExt}
+ *     <li>{@link com.github.lokic.javaext.Predicates}
  * </ul>
  * <p>
- * {@link com.github.lokic.javaext.CollectorExt} 相关扩展：
+ * {@link com.github.lokic.javaext.Collectors} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.CollectorExt.Reversed} 倒序
- *     <li>{@link com.github.lokic.javaext.CollectorExt.Distinct} 去重
+ *     <li>{@link com.github.lokic.javaext.Collectors.Reversed} 倒序
+ *     <li>{@link com.github.lokic.javaext.Collectors.Distinct} 去重
  * </ul>
  * <p>
  * 其他：
  * <ul>
- *     <li>{@link com.github.lokic.javaext.TypeExt} 类型相关
+ *     <li>{@link com.github.lokic.javaext.Types} 类型相关
  * </ul>
  */
 package com.github.lokic.javaext;
