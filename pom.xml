@@ -6,13 +6,31 @@
 
     <groupId>com.github.lokic</groupId>
     <artifactId>java-extensions</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
+    <name>java-extensions</name>
+    <description>Provide some useful extensions on the basis of core java to make java more usable.</description>
+    <url>https://github.com/lokic/java-extensions</url>
+
+    <developers>
+        <developer>
+            <name>lokic</name>
+            <email>kiraconan2046@gmail.com</email>
+        </developer>
+    </developers>
 
     <scm>
         <url>https://github.com/lokic/java-extensions</url>
         <connection>https://github.com/lokic/java-extensions.git</connection>
         <developerConnection>https://github.com/lokic</developerConnection>
     </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
