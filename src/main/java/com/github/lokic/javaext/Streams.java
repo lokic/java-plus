@@ -1,7 +1,5 @@
 package com.github.lokic.javaext;
 
-import lombok.NonNull;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,7 +48,8 @@ public class Streams {
      * 在 {@code Stream<Optional<T>>} 的流中，{@link Stream#flatMap(Function)} 的方法上，
      * 通过该方法 {@link #ofNullable(Optional)} 把 {@code option} 扁平化。
      */
-    public static <T> Stream<T> ofNullable(@NonNull Optional<T> option) {
+    public static <T> Stream<T> ofNullable(Optional<T> option) {
+        Objects.requireNonNull(option);
         return option.map(Stream::of).orElseGet(Stream::empty);
     }
 
