@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.lokic</groupId>
-    <artifactId>java-extensions</artifactId>
+    <artifactId>java-plus</artifactId>
     <version>0.0.1</version>
-    <name>java-extensions</name>
+    <name>java-plus</name>
     <description>Provide some useful extensions on the basis of core java to make java more usable.</description>
-    <url>https://github.com/lokic/java-extensions</url>
+    <url>https://github.com/lokic/java-plus</url>
 
     <developers>
         <developer>
@@ -19,8 +19,8 @@
     </developers>
 
     <scm>
-        <url>https://github.com/lokic/java-extensions</url>
-        <connection>https://github.com/lokic/java-extensions.git</connection>
+        <url>https://github.com/lokic/java-plus</url>
+        <connection>https://github.com/lokic/java-plus.git</connection>
         <developerConnection>https://github.com/lokic</developerConnection>
     </scm>
 
