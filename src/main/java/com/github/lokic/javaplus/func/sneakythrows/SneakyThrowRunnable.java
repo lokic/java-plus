@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 @FunctionalInterface
 public interface SneakyThrowRunnable extends Runnable {
 
-    void throwableRun() throws Exception;
+    void throwableRun() throws Throwable;
 
     @SneakyThrows
     @Override

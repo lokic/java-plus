@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface SneakyThrowSupplier<T> extends Supplier<T> {
 
-    T throwableGet() throws Exception;
+    T throwableGet() throws Throwable;
 
     @SneakyThrows
     @Override

@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface SneakyThrowConsumer1<T> extends Consumer<T> {
 
-    void throwableAccept(T t) throws Exception;
+    void throwableAccept(T t) throws Throwable;
 
     @SneakyThrows
     @Override
