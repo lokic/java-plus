@@ -1,13 +1,13 @@
 package com.github.lokic.javaplus.func.sneakythrows;
 
+import com.github.lokic.javaplus.func.throwable.ThrowSupplier;
 import lombok.SneakyThrows;
 
 import java.util.function.Supplier;
 
 @FunctionalInterface
-public interface SneakyThrowSupplier<T> extends Supplier<T> {
+public interface SneakyThrowSupplier<T> extends Supplier<T>, ThrowSupplier<T> {
 
-    T throwableGet() throws Throwable;
 
     @SneakyThrows
     @Override
@@ -15,4 +15,7 @@ public interface SneakyThrowSupplier<T> extends Supplier<T> {
         return throwableGet();
     }
 
+    static <T> SneakyThrowSupplier<T> cast(ThrowSupplier<T> throwSupplier) {
+        return throwSupplier::throwableGet;
+    }
 }

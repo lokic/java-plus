@@ -12,4 +12,8 @@ public interface TupleFunction3<T1, T2, T3, R> extends Function<Tuple3<T1, T2, T
     default R apply(Tuple3<T1, T2, T3> tuple3) {
         return apply(tuple3.getT1(), tuple3.getT2(), tuple3.getT3());
     }
+
+    static <T1, T2, T3, R> TupleFunction3<T1, T2, T3, R> cast(Function3<T1, T2, T3, R> function3) {
+        return function3::apply;
+    }
 }

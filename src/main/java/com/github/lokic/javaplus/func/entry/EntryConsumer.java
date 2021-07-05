@@ -13,4 +13,9 @@ public interface EntryConsumer<K, V> extends Consumer<Map.Entry<K, V>>, Consumer
     default void accept(Map.Entry<K, V> entry) {
         accept(entry.getKey(), entry.getValue());
     }
+
+
+    static <K, V> EntryConsumer<K, V> cast(Consumer2<K, V> consumer2) {
+        return consumer2::accept;
+    }
 }

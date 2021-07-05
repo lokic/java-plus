@@ -13,5 +13,11 @@ public interface EntryFunction<K, V, R> extends Function<Map.Entry<K, V>, R>, Fu
     default R apply(Map.Entry<K, V> entry) {
         return apply(entry.getKey(), entry.getValue());
     }
+
+
+    static <K, V, R> EntryFunction<K, V, R> cast(Function2<K, V, R> function2) {
+        return function2::apply;
+    }
+
 }
 

@@ -11,5 +11,13 @@
  *        .stream()
  *        .map((EntryFunction<Integer, String, String>) (index, desc) -> a + b))
  * }</pre>
+ *
+ * 或者
+ * <pre>{@code
+ *     Map<Integer, String> map = ...
+ *     map.entrySet()
+ *        .stream()
+ *        .map(EntryFunction.cast((index, desc) -> a + b))
+ * }</pre>
  */
 package com.github.lokic.javaplus.func.entry;

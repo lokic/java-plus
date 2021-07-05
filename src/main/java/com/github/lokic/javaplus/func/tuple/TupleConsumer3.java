@@ -13,4 +13,7 @@ public interface TupleConsumer3<T1, T2, T3> extends Consumer<Tuple3<T1, T2, T3>>
         accept(tuple3.getT1(), tuple3.getT2(), tuple3.getT3());
     }
 
+    static <T1, T2, T3> TupleConsumer3<T1, T2, T3> cast(Consumer3<T1, T2, T3> consumer3) {
+        return consumer3::accept;
+    }
 }

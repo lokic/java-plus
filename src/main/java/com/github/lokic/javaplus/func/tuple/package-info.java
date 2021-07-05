@@ -16,5 +16,17 @@
  *              })
  *             .map((TupleFunction2<Integer, String, String>) (index, desc) -> a + b))
  * }</pre>
+ *
+ * 或者
+ *
+ * <pre>{@code
+ *     Optional.of(xx)
+ *              .map(x -> {
+ *                 Integer index = ...
+ *                 String desc = ...
+ *                 return Tuple.of(index, desc)
+ *              })
+ *             .map(TupleFunction2.cast((index, desc) -> a + b)))
+ * }</pre>
  */
 package com.github.lokic.javaplus.func.tuple;
