@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface SneakyThrowFunction1<T, R> extends Function<T, R>, ThrowFunction1<T, R> {
+public interface SneakyThrowFunction1<T, R> extends Function<T, R>, ThrowFunction1<T, R>, SneakyThrow {
 
     @SneakyThrows
     @Override
@@ -14,7 +14,4 @@ public interface SneakyThrowFunction1<T, R> extends Function<T, R>, ThrowFunctio
         return throwableApply(t);
     }
 
-    static <T, R> SneakyThrowFunction1<T, R> cast(ThrowFunction1<T, R> throwFunction1) {
-        return throwFunction1::throwableApply;
-    }
 }

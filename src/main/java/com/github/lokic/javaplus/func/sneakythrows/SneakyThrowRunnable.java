@@ -4,8 +4,7 @@ import com.github.lokic.javaplus.func.throwable.ThrowRunnable;
 import lombok.SneakyThrows;
 
 @FunctionalInterface
-public interface SneakyThrowRunnable extends Runnable, ThrowRunnable {
-
+public interface SneakyThrowRunnable extends Runnable, ThrowRunnable, SneakyThrow {
 
     @SneakyThrows
     @Override
@@ -13,7 +12,4 @@ public interface SneakyThrowRunnable extends Runnable, ThrowRunnable {
         throwableRun();
     }
 
-    static SneakyThrowRunnable cast(ThrowRunnable throwRunnable) {
-        return throwRunnable::throwableRun;
-    }
 }

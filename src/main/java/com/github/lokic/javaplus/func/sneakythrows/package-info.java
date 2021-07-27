@@ -24,7 +24,7 @@
  *
  * <pre>{@code
  *      Optional.of(0)
- *              .map( SneakyThrowFunction1.cast(this::throwableMethod ));
+ *              .map( SneakyThrow.cast(this::throwableMethod ));
  *
  *      int throwableMethod(int i) throws Exception {
  *

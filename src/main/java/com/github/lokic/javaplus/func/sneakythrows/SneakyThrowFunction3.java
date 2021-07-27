@@ -5,8 +5,7 @@ import com.github.lokic.javaplus.func.tuple.TupleFunction3;
 import lombok.SneakyThrows;
 
 @FunctionalInterface
-public interface SneakyThrowFunction3<T1, T2, T3, R> extends TupleFunction3<T1, T2, T3, R>, ThrowFunction3<T1, T2, T3, R> {
-
+public interface SneakyThrowFunction3<T1, T2, T3, R> extends TupleFunction3<T1, T2, T3, R>, ThrowFunction3<T1, T2, T3, R>, SneakyThrow {
 
     @SneakyThrows
     @Override
@@ -14,8 +13,4 @@ public interface SneakyThrowFunction3<T1, T2, T3, R> extends TupleFunction3<T1, 
         return throwableApply(t1, t2, t3);
     }
 
-
-    static <T1, T2, T3, R> SneakyThrowFunction3<T1, T2, T3, R> cast(ThrowFunction3<T1, T2, T3, R> throwFunction3) {
-        return throwFunction3::throwableApply;
-    }
 }
