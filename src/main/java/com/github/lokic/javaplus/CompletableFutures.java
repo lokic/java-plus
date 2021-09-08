@@ -7,10 +7,22 @@ import com.github.lokic.javaplus.func.function.Function5;
 import com.github.lokic.javaplus.func.tuple.*;
 import com.github.lokic.javaplus.tuple.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public class CompletableFutures {
+
+    public static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
+                .thenApply(v -> futures.stream().map(CompletableFuture::join).collect(java.util.stream.Collectors.<T>toList()));
+    }
+
+    public static <K, V> CompletableFuture<Map<K, V>> sequence(Map<K, CompletableFuture<V>> futures) {
+        return CompletableFuture.allOf(futures.values().toArray(new CompletableFuture[futures.size()]))
+                .thenApply(v -> futures.entrySet().stream().collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, e -> e.getValue().join())));
+    }
 
     public static class Fors {
 
