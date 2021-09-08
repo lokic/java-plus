@@ -1,11 +1,14 @@
 package com.github.lokic.javaplus;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static com.github.lokic.javaplus.Consumers.toRunnable;
+import static com.github.lokic.javaplus.Optionals.Fors.For;
+import static com.github.lokic.javaplus.Optionals.Fors.Yield;
 
 
 public class OptionalsTest {
@@ -65,5 +68,17 @@ public class OptionalsTest {
         public void run() {
 
         }
+    }
+
+
+    @Test
+    public void test_For() {
+        Optional<String> r = Optional.of("1")
+                .flatMap(For(t1 -> Optional.of("2")))
+                .flatMap(For((t1, t2) -> Optional.of("3")))
+                .flatMap(For((t1, t2, t3) -> Optional.of("4")))
+                .map(Yield((t1, t2, t3, t4) -> t1 + t2 + t3 + t4));
+        Assert.assertTrue(r.isPresent());
+        Assert.assertEquals("1234", r.get());
     }
 }
