@@ -69,12 +69,28 @@ public class CompletableFuturesTest {
         CompletableFutures.getOrElseSneakyThrow(f);
     }
 
+    @Test
+    public void test_getOrElseSneakyThrow() {
+        CompletableFuture<String> f = new CompletableFuture<>();
+        f.complete("123");
+        Assert.assertEquals("123", CompletableFutures.getOrElseSneakyThrow(f));
+    }
+
+
     @Test(expected = IOException.class)
     public void test_getOrElseThrow_exception() throws Throwable {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.completeExceptionally(new IOException());
         CompletableFutures.getOrElseThrow(f);
     }
+
+    @Test
+    public void test_getOrElseThrow() throws Throwable {
+        CompletableFuture<String> f = new CompletableFuture<>();
+        f.complete("123");
+        Assert.assertEquals("123", CompletableFutures.getOrElseThrow(f));
+    }
+
 
     @Test(expected = IllegalStateException.class)
     public void test_getOrElseThrow_exceptionProvider_exception() {
