@@ -51,6 +51,8 @@
  * {@link java.lang.Enum} 相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaplus.property.Property1}
+ *     <li>{@link com.github.lokic.javaplus.property.Property2}
+ *     <li>{@link com.github.lokic.javaplus.property.Property3}
  * </ul>
  * <p>
  * {@link java.util.function.Predicate} 相关扩展：
