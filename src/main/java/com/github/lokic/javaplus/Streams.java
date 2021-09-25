@@ -1,10 +1,10 @@
 package com.github.lokic.javaplus;
 
-import com.github.lokic.javaplus.func.function.Function2;
-import com.github.lokic.javaplus.func.function.Function3;
-import com.github.lokic.javaplus.func.function.Function4;
-import com.github.lokic.javaplus.func.function.Function5;
-import com.github.lokic.javaplus.func.tuple.*;
+import com.github.lokic.javaplus.functional.function.Function2;
+import com.github.lokic.javaplus.functional.function.Function3;
+import com.github.lokic.javaplus.functional.function.Function4;
+import com.github.lokic.javaplus.functional.function.Function5;
+import com.github.lokic.javaplus.functional.tuple.*;
 import com.github.lokic.javaplus.tuple.*;
 
 import java.util.Collection;

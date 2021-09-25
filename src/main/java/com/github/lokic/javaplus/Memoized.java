@@ -1,7 +1,7 @@
 package com.github.lokic.javaplus;
 
-import com.github.lokic.javaplus.func.function.Function2;
-import com.github.lokic.javaplus.func.function.Function3;
+import com.github.lokic.javaplus.functional.function.Function2;
+import com.github.lokic.javaplus.functional.function.Function3;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
 import com.github.lokic.javaplus.tuple.Tuple3;

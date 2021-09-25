@@ -3,39 +3,39 @@
  * <p>
  * 元组定义相关package：{@link com.github.lokic.javaplus.tuple}
  * <p>
- * 偷偷抛异常相关函数的package：{@link com.github.lokic.javaplus.func.sneakythrows}
- * 元组相关函数的package：{@link com.github.lokic.javaplus.func.tuple}
- * {@link java.util.Map.Entry} 相关函数的package：{@link com.github.lokic.javaplus.func.entry}
+ * 偷偷抛异常相关函数的package：{@link com.github.lokic.javaplus.functional.sneakythrows}
+ * 元组相关函数的package：{@link com.github.lokic.javaplus.functional.tuple}
+ * {@link java.util.Map.Entry} 相关函数的package：{@link com.github.lokic.javaplus.functional.entry}
  * <p>
  * {@link java.util.function.Supplier}相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaplus.Lazy}
- *     <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowSupplier}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowSupplier}
  * </ul>
  * <p>
  * {@link java.util.function.Function}相关扩展：
  * <ul>
  *      <li>{@link com.github.lokic.javaplus.Functions}
- *      <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowFunction1}
- *      <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowFunction2}
- *      <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowFunction3}
- *      <li>{@link com.github.lokic.javaplus.func.tuple.TupleFunction2}
- *      <li>{@link com.github.lokic.javaplus.func.tuple.TupleFunction3}
- *      <li>{@link com.github.lokic.javaplus.func.entry.EntryFunction}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction1}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction2}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction3}
+ *      <li>{@link com.github.lokic.javaplus.functional.tuple.TupleFunction2}
+ *      <li>{@link com.github.lokic.javaplus.functional.tuple.TupleFunction3}
+ *      <li>{@link com.github.lokic.javaplus.functional.entry.EntryFunction}
  * </ul>
  * <p>
  * {@link java.util.function.Consumer}相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaplus.Consumers}
- *     <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowConsumer1}
- *     <li>{@link com.github.lokic.javaplus.func.tuple.TupleConsumer2}
- *     <li>{@link com.github.lokic.javaplus.func.tuple.TupleConsumer3}
- *     <li>{@link com.github.lokic.javaplus.func.entry.EntryConsumer}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowConsumer1}
+ *     <li>{@link com.github.lokic.javaplus.functional.tuple.TupleConsumer2}
+ *     <li>{@link com.github.lokic.javaplus.functional.tuple.TupleConsumer3}
+ *     <li>{@link com.github.lokic.javaplus.functional.entry.EntryConsumer}
  * </ul>
  * <p>
  * {@link java.lang.Runnable} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaplus.func.sneakythrows.SneakyThrowRunnable}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowRunnable}
  * </ul>
  * <p>
  * {@link java.util.Optional} 相关扩展：

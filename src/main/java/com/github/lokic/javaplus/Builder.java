@@ -1,7 +1,7 @@
 package com.github.lokic.javaplus;
 
-import com.github.lokic.javaplus.func.consumer.Consumer2;
-import com.github.lokic.javaplus.func.consumer.Consumer3;
+import com.github.lokic.javaplus.functional.consumer.Consumer2;
+import com.github.lokic.javaplus.functional.consumer.Consumer3;
 
 import java.util.ArrayList;
 import java.util.List;
