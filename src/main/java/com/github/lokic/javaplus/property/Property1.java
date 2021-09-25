@@ -1,4 +1,4 @@
-package com.github.lokic.javaplus;
+package com.github.lokic.javaplus.property;
 
 import lombok.NonNull;
 
@@ -33,13 +33,13 @@ import java.util.stream.Collectors;
  * @param <T> 泛型类
  * @param <K> 转换之后的key
  */
-public class Property<T extends Enum<T>, K> {
+public class Property1<T extends Enum<T>, K> {
 
     private final Class<T> clazz;
 
     private final Map<K, T> map;
 
-    public Property(@NonNull Class<T> clazz, @NonNull Function<T, K> function) {
+    public Property1(@NonNull Class<T> clazz, @NonNull Function<T, K> function) {
         this.clazz = clazz;
         this.map = Arrays.stream(clazz.getEnumConstants()).collect(Collectors.toMap(function, Function.identity()));
     }

@@ -50,7 +50,7 @@
  * <p>
  * {@link java.lang.Enum} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaplus.Property}
+ *     <li>{@link com.github.lokic.javaplus.property.Property1}
  * </ul>
  * <p>
  * {@link java.util.function.Predicate} 相关扩展：
