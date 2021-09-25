@@ -30,30 +30,30 @@ import java.util.stream.Collectors;
  *     }
  * }</pre>
  *
- * @param <T> 泛型类
+ * @param <E> 泛型类
  * @param <K> 转换之后的key
  */
-public class Property1<T extends Enum<T>, K> {
+public class Property1<E extends Enum<E>, K> {
 
-    private final Class<T> clazz;
+    private final Class<E> clazz;
 
-    private final Map<K, T> map;
+    private final Map<K, E> map;
 
-    public Property1(@NonNull Class<T> clazz, @NonNull Function<T, K> function) {
+    public Property1(@NonNull Class<E> clazz, @NonNull Function<E, K> function) {
         this.clazz = clazz;
         this.map = Arrays.stream(clazz.getEnumConstants()).collect(Collectors.toMap(function, Function.identity()));
     }
 
-    public T of(K k) {
+    public E of(K k) {
         return map.get(k);
     }
 
-    public Optional<T> optOf(K k) {
+    public Optional<E> optOf(K k) {
         return Optional.ofNullable(of(k));
     }
 
-    public T requireOf(K k) {
-        T t = of(k);
+    public E requireOf(K k) {
+        E t = of(k);
         if (t == null) {
             throw new IllegalStateException(clazz.getTypeName() + " not found [" + k + "]");
         }
