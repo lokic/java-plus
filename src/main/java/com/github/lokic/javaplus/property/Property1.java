@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  *             return code;
  *         }
  *
- *         public static final Property<AbEnum, Integer> OF_CODE =  new Property<>(AbEnum.class, AbEnum::getCode);
+ *         public static final Property1<AbEnum, Integer> OF_CODE =  new Property1<>(AbEnum.class, AbEnum::getCode);
  *     }
  * }</pre>
  *
