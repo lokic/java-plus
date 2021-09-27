@@ -1,5 +1,14 @@
 package com.github.lokic.javaplus;
 
+import lombok.SneakyThrows;
+
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Types {
 
     /**
@@ -36,4 +45,60 @@ public class Types {
     public static <T> Class<T> getClass(T t) {
         return (Class<T>) t.getClass();
     }
+
+    /**
+     * 获取object对应clazz的泛型。如果要使用lambda的传入，则clazz必须实现Serializable
+     */
+    public static <E> Class<E> getGeneric(Object object, Class<?> clazz) {
+        if (isLambda(object)) {
+            return Types.cast(getGenericForLambda(object));
+        } else {
+            return Types.cast(getGenericForObject(object, clazz));
+        }
+    }
+
+    private static boolean isLambda(Object object) {
+        String functionClassName = object.getClass().getName();
+        int lambdaMarkerIndex = functionClassName.indexOf("$$Lambda$");
+        return lambdaMarkerIndex != -1;
+    }
+
+    private static Class<?> getGenericForObject(Object object, Class<?> clazz) {
+        Type[] types = object.getClass().getGenericInterfaces();
+        for (Type type : types) {
+            if(type instanceof ParameterizedType) {
+                if (((ParameterizedType) type).getRawType() == clazz) {
+                    return (Class<?>) ((ParameterizedType)type).getActualTypeArguments()[0];
+                }
+            }
+        }
+        throw new IllegalStateException("object not a instance of " + clazz.getTypeName());
+    }
+
+    private static Class<?> getGenericForLambda(Object lambda) {
+        return (Class<?>) method(lambda).getParameters()[0].getParameterizedType();
+    }
+
+    private static Method method(Object lambda) {
+        SerializedLambda serialized = serialized(lambda);
+        Class<?> containingClass = getContainingClass(serialized);
+        return Arrays.stream(containingClass.getDeclaredMethods())
+                .filter(method -> Objects.equals(method.getName(), serialized.getImplMethodName()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("clazz not implement Serializable"));
+    }
+
+    @SneakyThrows
+    private static SerializedLambda serialized(Object lambda) {
+        Method writeMethod = lambda.getClass().getDeclaredMethod("writeReplace");
+        writeMethod.setAccessible(true);
+        return (SerializedLambda) writeMethod.invoke(lambda);
+    }
+
+    @SneakyThrows
+    private static Class<?> getContainingClass(SerializedLambda lambda) {
+        String className = lambda.getImplClass().replaceAll("/", ".");
+        return Class.forName(className);
+    }
+
 }
