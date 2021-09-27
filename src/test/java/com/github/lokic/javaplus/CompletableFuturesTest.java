@@ -62,10 +62,10 @@ public class CompletableFuturesTest {
         Assert.assertTrue(r.isCompletedExceptionally());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = Exception.class)
     public void test_getOrElseSneakyThrow_exception() {
         CompletableFuture<String> f = new CompletableFuture<>();
-        f.completeExceptionally(new IllegalStateException());
+        f.completeExceptionally(new Exception());
         CompletableFutures.getOrElseSneakyThrow(f);
     }
 

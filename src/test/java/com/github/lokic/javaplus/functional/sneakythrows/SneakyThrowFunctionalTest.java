@@ -14,14 +14,14 @@ public class SneakyThrowFunctionalTest {
     @Test
     public void cast() {
         List<String> re = Stream.of(1, 2)
-                .map(SneakyThrowFunctional.cast(this::toStr))
+                .map(SneakyThrowFunctional.cast(this::toStrThrow))
                 .collect(Collectors.toList());
 
         Assert.assertEquals(Lists.newArrayList("1", "2"), re);
     }
 
 
-    public String toStr(Integer x) throws IOException {
+    public String toStrThrow(Integer x) throws Exception {
         return String.valueOf(x);
     }
 }

@@ -24,6 +24,7 @@ public class OptionalsTest {
 
     }
 
+    // recommend
     @Test
     public void accept_should_runnable_when_optionalHasValue() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
@@ -47,6 +48,7 @@ public class OptionalsTest {
 
     }
 
+    // recommend
     @Test
     public void accept_should_runnable_when_optionalIsEmpty() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
