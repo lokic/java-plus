@@ -17,7 +17,7 @@
  *     Map<Integer, String> map = ...
  *     map.entrySet()
  *        .stream()
- *        .map(EntryFunctional.cast((index, desc) -> a + b))
+ *        .map(EntryFunctional.function((index, desc) -> a + b))
  * }</pre>
  */
 package com.github.lokic.javaplus.functional.entry;

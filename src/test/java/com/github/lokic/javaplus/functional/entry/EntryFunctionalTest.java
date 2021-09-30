@@ -18,12 +18,12 @@ public class EntryFunctionalTest {
         
         // EntryFunction
         ageMaps.entrySet().stream()
-                .map(EntryFunctional.cast((a, b) -> (this.zipEntryTest(a, b))))
+                .map(EntryFunctional.function(this::zipEntryTest))
                 .collect(Collectors.toList());
 
         // EntryConsumer
         ageMaps.entrySet().stream()
-                .forEach(EntryFunctional.cast((a, b) -> {this.zipEntryTest(a, b);}));
+                .forEach(EntryFunctional.consumer(this::zipEntryTest));
     }
 
     public <A, B> Stream<Map.Entry<A, B>> zipEntryTest(Stream<A> streamA, Stream<B> streamB) {

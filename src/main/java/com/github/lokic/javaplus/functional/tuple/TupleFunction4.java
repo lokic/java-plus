@@ -6,7 +6,7 @@ import com.github.lokic.javaplus.tuple.Tuple4;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface TupleFunction4<T1, T2, T3, T4, R> extends Function<Tuple4<T1, T2, T3, T4>, R>, Function4<T1, T2, T3, T4, R> {
+public interface TupleFunction4<T1, T2, T3, T4, R> extends Function<Tuple4<T1, T2, T3, T4>, R>, Function4<T1, T2, T3, T4, R>, TupleFunctional {
 
     @Override
     default R apply(Tuple4<T1, T2, T3, T4> tuple4) {
