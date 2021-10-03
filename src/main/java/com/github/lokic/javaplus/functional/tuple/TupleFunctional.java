@@ -16,7 +16,6 @@ public interface TupleFunctional {
         return consumer3::accept;
     }
 
-
     static <T1, T2> TuplePredicate2<T1, T2> predicate(Predicate2<T1, T2> predicate2) {
         return predicate2::test;
     }
@@ -24,7 +23,6 @@ public interface TupleFunctional {
     static <T1, T2, T3> TuplePredicate3<T1, T2, T3> predicate(Predicate3<T1, T2, T3> predicate3) {
         return predicate3::test;
     }
-
 
     static <T1, T2, R> TupleFunction2<T1, T2, R> function(Function2<T1, T2, R> function2) {
         return function2::apply;
