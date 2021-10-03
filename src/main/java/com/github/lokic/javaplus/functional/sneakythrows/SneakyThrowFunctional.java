@@ -4,11 +4,9 @@ import com.github.lokic.javaplus.functional.throwable.*;
 
 public interface SneakyThrowFunctional {
 
-
     static <T> SneakyThrowConsumer1<T> consumer(ThrowConsumer1<T> throwConsumer1) {
         return throwConsumer1::throwableAccept;
     }
-
 
     static <T, R> SneakyThrowFunction1<T, R> function(ThrowFunction1<T, R> throwFunction1) {
         return throwFunction1::throwableApply;
@@ -22,11 +20,9 @@ public interface SneakyThrowFunctional {
         return throwFunction3::throwableApply;
     }
 
-
     static SneakyThrowRunnable runnable(ThrowRunnable throwRunnable) {
         return throwRunnable::throwableRun;
     }
-
 
     static <T> SneakyThrowSupplier<T> supplier(ThrowSupplier<T> throwSupplier) {
         return throwSupplier::throwableGet;

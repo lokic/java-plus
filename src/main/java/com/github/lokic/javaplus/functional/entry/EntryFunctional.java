@@ -10,7 +10,6 @@ public interface EntryFunctional {
         return function2::apply;
     }
 
-
     static <K, V> EntryConsumer<K, V> consumer(Consumer2<K, V> consumer2) {
         return consumer2::accept;
     }
