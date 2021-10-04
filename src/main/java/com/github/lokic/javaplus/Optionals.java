@@ -33,7 +33,7 @@ public class Optionals {
      *          .run();}
      * </pre>
      * <p>
-     * See also: 可以使用 {@link Consumers#toRunnable(Consumer)} 转换Consumer到Runnable
+     * See also: 可以使用 {@link Consumers#runnable(Consumer)} 转换Consumer到Runnable
      * <p>
      */
     public static <T> OptionalConsumer<T> ifPresentOrElse(Consumer<T> c, Runnable r) {

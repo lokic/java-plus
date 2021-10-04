@@ -18,7 +18,7 @@ public class Consumers {
     /**
      * {@code Consumer<T>} 转换 {@code Function<T, Runnable>}
      */
-    public static <T> Function<T, Runnable> toRunnable(Consumer<T> consumer) {
+    public static <T> Function<T, Runnable> runnable(Consumer<T> consumer) {
         return x -> () -> consumer.accept(x);
     }
 
