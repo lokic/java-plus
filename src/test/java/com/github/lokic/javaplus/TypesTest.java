@@ -11,7 +11,14 @@ public class TypesTest {
     @Test
     public void getGeneric() {
         assertEquals(TestEvent.class, Types.getGeneric(new TestEventHandler(), EventHandler.class));
-        assertEquals(TestEvent.class, Types.getGeneric((EventHandler<TestEvent>) event -> {}, EventHandler.class));
+        assertEquals(TestEvent.class, Types.getGeneric((EventHandler<TestEvent>) event -> {
+        }, EventHandler.class));
+        assertEquals(TestEvent.class, Types.getGeneric(new EventHandler<TestEvent>() {
+            @Override
+            public void handle(TestEvent event) {
+
+            }
+        }, EventHandler.class));
     }
 
     public static class TestEvent implements Event {
