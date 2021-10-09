@@ -11,12 +11,13 @@ public class BuilderTest {
         UserInfo expect = new UserInfo();
         expect.setName("lokic");
         expect.setAge(1);
-        expect.setAddress("abc");
+        expect.setAddress("zhejiang,hangzhou,abc");
 
         UserInfo res = Builder.of(UserInfo::new)
                 .with(UserInfo::setName, "lokic")
                 .with(UserInfo::setAge, 1)
                 .with(UserInfo::setAddress, "abc")
+                .with(UserInfo::setProvinceAndCity, "zhejiang", "hangzhou")
                 .build();
 
         Assert.assertEquals(expect, res);
@@ -27,6 +28,10 @@ public class BuilderTest {
         private String name;
         private Integer age;
         private String address;
+
+        public void setProvinceAndCity(String province, String city) {
+            this.address = province + "," + city + "," + (address == null ? "" : address);
+        }
     }
 
 }
