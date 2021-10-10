@@ -10,10 +10,10 @@ import java.util.function.Function;
 /**
  * 用于K1、K2、K3三个值作为key来查询枚举的场景
  *
- * @param <E>
- * @param <K1>
- * @param <K2>
- * @param <K3>
+ * @param <E>  枚举类
+ * @param <K1> 转换之后的key1
+ * @param <K2> 转换之后的key2
+ * @param <K3> 转换之后的key3
  */
 public class Property3<E extends Enum<E>, K1, K2, K3> {
   private final Property1<E, Tuple3<K1, K2, K3>> property;

@@ -63,10 +63,14 @@ public class Types {
 
     /**
      * 获取{@code object}对应{@code clazz}的泛型，暂时支持只有一个泛型的类。
-     * <p/>
-     * Note: {@code object}支持匿名类、lambda表达式，如果要使用lambda对象的传入，则 {@code clazz} 必须实现 {@link java.io.Serializable}
+     * <p>
+     *
+     * @param object 对应对象，支持匿名类、lambda表达式，如果要使用lambda对象的传入，则 {@code clazz} 必须实现 {@link java.io.Serializable}
+     * @param clazz  需要获取泛型对应的类
+     * @param <T>    泛型的类型
+     * @return 泛型类
      */
-    public static <E> Class<E> getGeneric(Object object, Class<?> clazz) {
+    public static <T> Class<T> getGeneric(Object object, Class<?> clazz) {
         if (LambdaGeneric.isLambda(object)) {
             return Types.cast(LambdaGeneric.getGeneric(object));
         } else {

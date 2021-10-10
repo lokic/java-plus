@@ -10,9 +10,9 @@ import java.util.function.Function;
 /**
  * 用于K1和K2二个值作为key来查询枚举的场景
  *
- * @param <E>
- * @param <K1>
- * @param <K2>
+ * @param <E>  枚举类
+ * @param <K1> 转换之后的key1
+ * @param <K2> 转换之后的key2
  */
 public class Property2<E extends Enum<E>, K1, K2> {
     private final Property1<E, Tuple2<K1, K2>> property;
