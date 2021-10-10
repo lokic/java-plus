@@ -2,6 +2,7 @@ package com.github.lokic.javaplus;
 
 import com.github.lokic.javaplus.functional.consumer.Consumer2;
 import com.github.lokic.javaplus.functional.consumer.Consumer3;
+import com.github.lokic.javaplus.functional.consumer.Consumer4;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,12 @@ public class Builder<T> {
 
     public <P1, P2> Builder<T> with(Consumer3<T, P1, P2> consumer, P1 p1, P2 p2) {
         Consumer<T> c = instance -> consumer.accept(instance, p1, p2);
+        modifiers.add(c);
+        return this;
+    }
+
+    public <P1, P2, P3> Builder<T> with(Consumer4<T, P1, P2, P3> consumer, P1 p1, P2 p2, P3 p3) {
+        Consumer<T> c = instance -> consumer.accept(instance, p1, p2, p3);
         modifiers.add(c);
         return this;
     }

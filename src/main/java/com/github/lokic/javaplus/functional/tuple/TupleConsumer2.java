@@ -6,7 +6,7 @@ import com.github.lokic.javaplus.tuple.Tuple2;
 import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface TupleConsumer2<T1, T2> extends Consumer<Tuple2<T1, T2>>, Consumer2<T1, T2> {
+public interface TupleConsumer2<T1, T2> extends Consumer<Tuple2<T1, T2>>, Consumer2<T1, T2>, TupleFunctional {
 
     @Override
     default void accept(Tuple2<T1, T2> tuple2) {

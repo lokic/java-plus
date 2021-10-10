@@ -6,7 +6,7 @@
 
     <groupId>com.github.lokic</groupId>
     <artifactId>java-plus</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
     <name>java-plus</name>
     <description>Provide some useful extensions on the basis of core java to make java more usable.</description>
     <url>https://github.com/lokic/java-plus</url>
@@ -20,8 +20,8 @@
 
     <scm>
         <url>https://github.com/lokic/java-plus</url>
-        <connection>https://github.com/lokic/java-plus.git</connection>
-        <developerConnection>https://github.com/lokic</developerConnection>
+        <connection>scm:git:https://github.com/lokic/java-plus.git</connection>
+        <developerConnection>scm:git:https://github.com/lokic/java-plus.git</developerConnection>
     </scm>
 
     <licenses>

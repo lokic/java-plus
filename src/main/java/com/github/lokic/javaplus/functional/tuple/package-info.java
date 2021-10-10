@@ -26,7 +26,7 @@
  *                 String desc = ...
  *                 return Tuple.of(index, desc)
  *              })
- *             .map(TupleFunctional.cast((index, desc) -> a + b)))
+ *             .map(TupleFunctional.function((index, desc) -> a + b)))
  * }</pre>
  */
 package com.github.lokic.javaplus.functional.tuple;
