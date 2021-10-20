@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -51,22 +52,44 @@ public class CompletableFutures {
     }
 
 
+    /**
+     * 阻塞获取CompletableFuture返回，成功返回对应值，失败抛出异常。
+     * Note：该方法会把受检异常也抛出，而不需要try catch。
+     * <p>
+     * {@code CompletableFutures#join(CompletableFuture)} 与 {@link CompletableFuture#join()} 的区别：
+     * <p>
+     * CompletableFutures#join(CompletableFuture)会把实际异常抛出，而不是使用CompletionException封装之后抛出。
+     *
+     * @param future
+     * @param <T>
+     * @return
+     */
     @SneakyThrows
-    public static <T> T getOrElseSneakyThrow(CompletableFuture<T> future) {
+    public static <T> T join(CompletableFuture<T> future) {
         try {
-            return future.get();
+            /*
+             * Note:
+             * must call {@link java.util.concurrent.CompletableFuture#get(long, TimeUnit)} because
+             * {@link java.util.concurrent.CompletableFuture#get()} was proved to have serious performance drop.
+             */
+            return future.get(Integer.MAX_VALUE, TimeUnit.MILLISECONDS);
         } catch (ExecutionException e) {
             throw e.getCause();
         }
     }
 
-    public static <T> T getOrElseThrow(CompletableFuture<T> future) throws Throwable {
-        return getOrElseThrow(future, Function.identity());
+    public static <T> T get(CompletableFuture<T> future) throws Throwable {
+        return get(future, Function.identity());
     }
 
-    public static <T, X extends Throwable> T getOrElseThrow(CompletableFuture<T> future, Function<? super Throwable, X> exceptionProvider) throws X {
+    public static <T, X extends Throwable> T get(CompletableFuture<T> future, Function<? super Throwable, X> exceptionProvider) throws X {
         try {
-            return future.get();
+            /*
+             * Note:
+             * must call {@link java.util.concurrent.CompletableFuture#get(long, TimeUnit)} because
+             * {@link java.util.concurrent.CompletableFuture#get()} was proved to have serious performance drop.
+             */
+            return future.get(Integer.MAX_VALUE, TimeUnit.MILLISECONDS);
         } catch (ExecutionException e) {
             throw exceptionProvider.apply(e.getCause());
         } catch (Throwable e) {

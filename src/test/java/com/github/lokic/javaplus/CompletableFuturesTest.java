@@ -63,40 +63,40 @@ public class CompletableFuturesTest {
     }
 
     @Test(expected = Exception.class)
-    public void test_getOrElseSneakyThrow_exception() {
+    public void test_join_exception() {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.completeExceptionally(new Exception());
-        CompletableFutures.getOrElseSneakyThrow(f);
+        CompletableFutures.join(f);
     }
 
     @Test
-    public void test_getOrElseSneakyThrow() {
+    public void test_join() {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.complete("123");
-        Assert.assertEquals("123", CompletableFutures.getOrElseSneakyThrow(f));
+        Assert.assertEquals("123", CompletableFutures.join(f));
     }
 
 
     @Test(expected = IOException.class)
-    public void test_getOrElseThrow_exception() throws Throwable {
+    public void test_get_exception() throws Throwable {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.completeExceptionally(new IOException());
-        CompletableFutures.getOrElseThrow(f);
+        CompletableFutures.get(f);
     }
 
     @Test
-    public void test_getOrElseThrow() throws Throwable {
+    public void test_get() throws Throwable {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.complete("123");
-        Assert.assertEquals("123", CompletableFutures.getOrElseThrow(f));
+        Assert.assertEquals("123", CompletableFutures.get(f));
     }
 
 
     @Test(expected = IllegalStateException.class)
-    public void test_getOrElseThrow_exceptionProvider_exception() {
+    public void test_get_exceptionProvider_exception() {
         CompletableFuture<String> f = new CompletableFuture<>();
         f.completeExceptionally(new IOException());
-        CompletableFutures.getOrElseThrow(f, IllegalStateException::new);
+        CompletableFutures.get(f, IllegalStateException::new);
     }
 
     @Test
