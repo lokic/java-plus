@@ -8,7 +8,7 @@
     <artifactId>java-plus</artifactId>
     <version>0.0.10</version>
     <name>java-plus</name>
-    <description>Provide some useful extensions on the basis of core java to make java more usable.</description>
+    <description>Provide some useful extensions on the basis of java8 to make java more usable.</description>
     <url>https://github.com/lokic/java-plus</url>
 
     <developers>
