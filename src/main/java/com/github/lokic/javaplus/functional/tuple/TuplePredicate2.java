@@ -6,7 +6,7 @@ import com.github.lokic.javaplus.tuple.Tuple2;
 import java.util.function.Predicate;
 
 @FunctionalInterface
-public interface TuplePredicate2<T1, T2> extends Predicate<Tuple2<T1, T2>>, Predicate2<T1, T2>, TupleFunctional {
+public interface TuplePredicate2<T1, T2> extends Predicate<Tuple2<T1, T2>>, Predicate2<T1, T2> {
 
     @Override
     default boolean test(Tuple2<T1, T2> tuple2) {

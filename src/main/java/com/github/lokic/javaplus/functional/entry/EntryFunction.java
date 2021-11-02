@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface EntryFunction<K, V, R> extends Function<Map.Entry<K, V>, R>, Function2<K, V, R>, EntryFunctional {
+public interface EntryFunction<K, V, R> extends Function<Map.Entry<K, V>, R>, Function2<K, V, R> {
 
     @Override
     default R apply(Map.Entry<K, V> entry) {

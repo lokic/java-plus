@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import java.util.function.Supplier;
 
 @FunctionalInterface
-public interface SneakyThrowSupplier<T> extends Supplier<T>, ThrowSupplier<T>, SneakyThrowFunctional {
+public interface SneakyThrowSupplier<T> extends Supplier<T>, ThrowSupplier<T> {
 
     @SneakyThrows
     @Override

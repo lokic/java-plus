@@ -33,7 +33,7 @@ public class Optionals {
      *          .run();}
      * </pre>
      * <p>
-     * See also: 可以使用 {@link Consumers#runnable(Consumer)} 转换Consumer到Runnable
+     * See also: 可以使用 {@link com.github.lokic.javaplus.functional.function.Functional#runnable(Consumer)} 转换Consumer到Runnable
      * <p>
      */
     public static <T> OptionalConsumer<T> ifPresentOrElse(Consumer<T> c, Runnable r) {

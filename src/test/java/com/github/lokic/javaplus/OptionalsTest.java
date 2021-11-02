@@ -1,12 +1,12 @@
 package com.github.lokic.javaplus;
 
+import com.github.lokic.javaplus.functional.function.Functional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
-import static com.github.lokic.javaplus.Consumers.runnable;
 import static com.github.lokic.javaplus.Optionals.Fors.For;
 import static com.github.lokic.javaplus.Optionals.Fors.Yield;
 
@@ -29,7 +29,7 @@ public class OptionalsTest {
     public void accept_should_runnable_when_optionalHasValue() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
         Optional.of("123")
-                .map(runnable(spyMethod::consumer))
+                .map(Functional.runnable(spyMethod::consumer))
                 .orElse(spyMethod::run)
                 .run();
 
@@ -53,7 +53,7 @@ public class OptionalsTest {
     public void accept_should_runnable_when_optionalIsEmpty() {
         SpyMethod spyMethod = Mockito.mock(SpyMethod.class);
         Optional.<String>empty()
-                .map(runnable(spyMethod::consumer))
+                .map(Functional.runnable(spyMethod::consumer))
                 .orElse(spyMethod::run)
                 .run();
 

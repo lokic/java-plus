@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 @FunctionalInterface
-public interface EntryPredicate<K, V> extends Predicate<Map.Entry<K, V>>, Predicate2<K, V>, EntryFunctional {
+public interface EntryPredicate<K, V> extends Predicate<Map.Entry<K, V>>, Predicate2<K, V> {
     @Override
     default boolean test(Map.Entry<K, V> entry) {
         return test(entry.getKey(), entry.getValue());

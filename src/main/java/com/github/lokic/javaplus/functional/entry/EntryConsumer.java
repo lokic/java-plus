@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface EntryConsumer<K, V> extends Consumer<Map.Entry<K, V>>, Consumer2<K, V>, EntryFunctional {
+public interface EntryConsumer<K, V> extends Consumer<Map.Entry<K, V>>, Consumer2<K, V> {
 
     @Override
     default void accept(Map.Entry<K, V> entry) {

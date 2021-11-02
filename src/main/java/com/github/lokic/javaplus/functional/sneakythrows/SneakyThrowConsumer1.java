@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface SneakyThrowConsumer1<T> extends Consumer<T>, ThrowConsumer1<T>, SneakyThrowFunctional {
+public interface SneakyThrowConsumer1<T> extends Consumer<T>, ThrowConsumer1<T> {
 
     @SneakyThrows
     @Override
