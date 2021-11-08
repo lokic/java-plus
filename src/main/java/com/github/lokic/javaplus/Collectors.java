@@ -1,11 +1,15 @@
 package com.github.lokic.javaplus;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import com.github.lokic.javaplus.functional.function.Function2;
+import com.github.lokic.javaplus.tuple.Tuple;
+import com.github.lokic.javaplus.tuple.Tuple2;
+
+import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 public class Collectors {
 
@@ -36,29 +40,29 @@ public class Collectors {
     public static class Distinct {
 
         /**
-         * 去重复，如果数据存在相同的rule，则保留最新配置的rule
+         * 去重复，如果数据存在相同的值，则保留最新配置的值
          * <p>
          * 如，before: A B A C   after: B A C
          *
          * @param <T> Stream里的类型
          */
         public static <T> Collector<T, ?, List<T>> distinctLastPut() {
-            return distinctByKey(Function.identity(), Order.LAST_PUT, last());
+            return distinctByKey(Function.identity(), Order.LAST_PUT);
         }
 
         public static <T> Collector<T, ?, List<T>> distinctLastPutByKey(Function<? super T, ?> keyExtractor) {
-            return distinctByKey(keyExtractor, Order.LAST_PUT, last());
+            return distinctByKey(keyExtractor, Order.LAST_PUT);
         }
 
         /**
-         * 去重复，如果数据存在相同的rule，则保留最早配置的rule
+         * 去重复，如果数据存在相同的值，则保留最早配置的值
          * <p>
          * 如，before: A B A C  after: A B C
          *
          * @param <T> Stream里的类型
          */
         public static <T> Collector<T, ?, List<T>> distinctFirstPut() {
-            return distinctByKey(Function.identity(), Order.FIRST_PUT, first());
+            return distinctByKey(Function.identity(), Order.FIRST_PUT);
         }
 
         /**
@@ -70,22 +74,30 @@ public class Collectors {
          * @param <T> Stream里的类型
          */
         public static <T> Collector<T, ?, List<T>> distinctFirstPutByKey(Function<? super T, ?> keyExtractor) {
-            return distinctByKey(keyExtractor, Order.FIRST_PUT, first());
+            return distinctByKey(keyExtractor, Order.FIRST_PUT);
         }
 
         private static <T> Collector<T, ?, List<T>> distinctByKey(
-                Function<? super T, ?> keyExtractor, Order order, Function<List<T>, T> finisher) {
-
+                Function<? super T, ?> keyExtractor, Order order) {
             return java.util.stream.Collectors.collectingAndThen(
-                    java.util.stream.Collectors.groupingBy(
+                    java.util.stream.Collectors.toMap(
                             keyExtractor,
-                            () -> buildMap(order),
-                            java.util.stream.Collectors.toList()
+                            Function.identity(),
+                            (a, b) -> merge(order, a, b),
+                            () -> buildMap(order)
                     ),
-                    res -> res.values()
-                            .stream()
-                            .map(finisher)
-                            .collect(java.util.stream.Collectors.toList()));
+                    res -> new ArrayList<>(res.values()));
+        }
+
+        private static <T> T merge(Order order, T a, T b) {
+            switch (order) {
+                case FIRST_PUT:
+                    return a;
+                case LAST_PUT:
+                    return b;
+                default:
+                    throw new IllegalStateException("not support order = " + order);
+            }
         }
 
         private static <K, V> Map<K, V> buildMap(Order order) {
@@ -97,14 +109,6 @@ public class Collectors {
                 default:
                     throw new IllegalStateException("not support order = " + order);
             }
-        }
-
-        private static <T> Function<List<T>, T> last() {
-            return li -> li.get(li.size() - 1);
-        }
-
-        private static <T> Function<List<T>, T> first() {
-            return li -> li.get(0);
         }
 
         private enum Order {
@@ -120,4 +124,57 @@ public class Collectors {
         }
     }
 
+    public static <T1, T2, K, U, M extends Map<K, U>>
+    Collector<Tuple2<T1, T2>, ?, M> toMap(
+            Function2<? super T1, ? super T2, ? extends K> keyMapper,
+            Function2<? super T1, ? super T2, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
+        return java.util.stream.Collectors.toMap(
+                t -> keyMapper.apply(t.getT1(), t.getT2()),
+                t -> valueMapper.apply(t.getT1(), t.getT2()),
+                mergeFunction, mapSupplier);
+    }
+
+    public static <T1, T2, K, U, M extends Map<K, U>>
+    Collector<Tuple2<T1, T2>, ?, Stream<Map.Entry<K, U>>> toMapEntryStream(
+            Function2<? super T1, ? super T2, ? extends K> keyMapper,
+            Function2<? super T1, ? super T2, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
+        return toMapEntryStream(t -> keyMapper.apply(t.getT1(), t.getT2()), t -> valueMapper.apply(t.getT1(), t.getT2()),
+                mergeFunction, mapSupplier);
+    }
+
+    public static <T, K, U, M extends Map<K, U>>
+    Collector<T, ?, Stream<Map.Entry<K, U>>> toMapEntryStream(
+            Function<? super T, ? extends K> keyMapper,
+            Function<? super T, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
+        return java.util.stream.Collectors.collectingAndThen(
+                java.util.stream.Collectors.toMap(keyMapper, valueMapper, mergeFunction, mapSupplier),
+                m -> m.entrySet().stream());
+    }
+
+    public static <T1, T2, K, U, M extends Map<K, U>>
+    Collector<Tuple2<T1, T2>, ?, Stream<Tuple2<K, U>>> toMapTupleStream(
+            Function2<? super T1, ? super T2, ? extends K> keyMapper,
+            Function2<? super T1, ? super T2, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
+        return toMapTupleStream(t -> keyMapper.apply(t.getT1(), t.getT2()), t -> valueMapper.apply(t.getT1(), t.getT2()),
+                mergeFunction, mapSupplier);
+    }
+
+    public static <T, K, U, M extends Map<K, U>>
+    Collector<T, ?, Stream<Tuple2<K, U>>> toMapTupleStream(
+            Function<? super T, ? extends K> keyMapper,
+            Function<? super T, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
+        return java.util.stream.Collectors.collectingAndThen(
+                java.util.stream.Collectors.toMap(keyMapper, valueMapper, mergeFunction, mapSupplier),
+                m -> m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue())));
+    }
 }
