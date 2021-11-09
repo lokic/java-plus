@@ -4,36 +4,37 @@ import com.github.lokic.javaplus.tuple.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.entry;
+
 public class CollectorsTest {
 
     @Test
     public void test_distinctFirstPut() {
         Assertions.assertThat(
-                Stream.of("A", "B", "A", "C")
-                        .collect(Collectors.Distinct.distinctFirstPut()))
+                        Stream.of("A", "B", "A", "C")
+                                .collect(Collectors.Distinct.distinctFirstPut()))
                 .containsExactly("A", "B", "C");
     }
 
     @Test
     public void test_distinctLastPut() {
         Assertions.assertThat(
-                Stream.of("A", "B", "A", "C")
-                        .collect(Collectors.Distinct.distinctLastPut()))
+                        Stream.of("A", "B", "A", "C")
+                                .collect(Collectors.Distinct.distinctLastPut()))
                 .containsExactly("B", "A", "C");
     }
 
     @Test
     public void test_distinctFirstPutByKey() {
         Assertions.assertThat(
-                Stream.of(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("A", "A2"), new DataInfo("C", "C1"))
-                        .collect(Collectors.Distinct.distinctFirstPutByKey(DataInfo::getKey)))
+                        Stream.of(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("A", "A2"), new DataInfo("C", "C1"))
+                                .collect(Collectors.Distinct.distinctFirstPutByKey(DataInfo::getKey)))
                 .containsExactly(new DataInfo("A", "A1"), new DataInfo("B", "B1"), new DataInfo("C", "C1"));
     }
 
@@ -47,15 +48,11 @@ public class CollectorsTest {
 
     @Test
     public void test_toMap() {
-        Map<String, String> expectMap = new HashMap<>();
-        expectMap.put("A", "A1");
-        expectMap.put("B", "B1");
-        expectMap.put("C", "C1");
-        Assert.assertEquals(
-                expectMap,
-                Stream.of(Tuple.of("A", "A1"), Tuple.of("B", "B1"), Tuple.of("A", "A2"), Tuple.of("C", "C1"))
-                        .collect(Collectors.toMap((k, v) -> k, (k, v) -> v, (a, b) -> a, HashMap::new))
-        );
+        Map<String, String> result = Stream.of(Tuple.of("A", "A1"), Tuple.of("B", "B1"), Tuple.of("A", "A2"), Tuple.of("C", "C1"))
+                .collect(Collectors.toMap((k, v) -> k, (k, v) -> v, (a, b) -> a, HashMap::new));
+
+        Assertions.assertThat(result)
+                .containsExactly(entry("A", "A1"), entry("B", "B1"), entry("C", "C1"));
     }
 
     @Test
@@ -66,6 +63,13 @@ public class CollectorsTest {
         ).containsExactly(Tuple.of("A", "A1"), Tuple.of("B", "B1"), Tuple.of("C", "C1"));
     }
 
+    @Test
+    public void test_toMapEntryStream() {
+        Assertions.assertThat(
+                Stream.of(Tuple.of("A", "A1"), Tuple.of("B", "B1"), Tuple.of("A", "A2"), Tuple.of("C", "C1"))
+                        .collect(Collectors.toMapEntryStream((k, v) -> k, (k, v) -> v, (a, b) -> a, HashMap::new))
+        ).containsExactly(entry("A", "A1"), entry("B", "B1"), entry("C", "C1"));
+    }
 
     @Data
     @AllArgsConstructor
