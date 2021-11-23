@@ -49,11 +49,11 @@ public class Join {
                     .collect(Collectors.groupingBy(t -> matchKey(t, leftKey, rightKey)))
                     .values()
                     .stream()
-                    .flatMap(this::product)
+                    .flatMap(this::cartesian)
                     .filter(this.joinMatcher);
         }
 
-        private Stream<Tuple2<T1, T2>> product(List<Tuple2<T1, T2>> li) {
+        private Stream<Tuple2<T1, T2>> cartesian(List<Tuple2<T1, T2>> li) {
             Map<Boolean, List<Tuple2<T1, T2>>> map = li.stream()
                     .collect(Collectors.partitioningBy(this::isLeft, this.toListOrNullList()));
             List<Tuple2<T1, T2>> left = map.get(true);
