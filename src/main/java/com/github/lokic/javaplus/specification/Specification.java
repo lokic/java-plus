@@ -8,5 +8,5 @@ public interface Specification<T> {
 
     Specification<T> or(Specification<T> specification);
 
-    Specification<T> not(Specification<T> specification);
+    Specification<T> not();
 }
