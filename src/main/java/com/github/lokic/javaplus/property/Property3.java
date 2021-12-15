@@ -16,21 +16,21 @@ import java.util.function.Function;
  * @param <K3> 转换之后的key3
  */
 public class Property3<E extends Enum<E>, K1, K2, K3> {
-  private final Property1<E, Tuple3<K1, K2, K3>> property;
+    private final Property1<E, Tuple3<K1, K2, K3>> property;
 
-  public Property3(@NonNull Class<E> clazz, @NonNull Function<E, Tuple3<K1, K2, K3>> function) {
-    this.property = new Property1<>(clazz, function);
-  }
+    public Property3(@NonNull Class<E> clazz, @NonNull Function<E, Tuple3<K1, K2, K3>> function) {
+        this.property = new Property1<>(clazz, function);
+    }
 
-  public E of(K1 k1, K2 k2, K3 k3) {
-    return property.of(Tuple.of(k1, k2, k3));
-  }
+    public E of(K1 k1, K2 k2, K3 k3) {
+        return property.of(Tuple.of(k1, k2, k3));
+    }
 
-  public Optional<E> optOf(K1 k1, K2 k2, K3 k3) {
-    return property.optOf(Tuple.of(k1, k2, k3));
-  }
+    public Optional<E> optOf(K1 k1, K2 k2, K3 k3) {
+        return property.optOf(Tuple.of(k1, k2, k3));
+    }
 
-  public E requireOf(K1 k1, K2 k2, K3 k3) {
-    return property.requireOf(Tuple.of(k1, k2, k3));
-  }
+    public E requireOf(K1 k1, K2 k2, K3 k3) {
+        return property.requireOf(Tuple.of(k1, k2, k3));
+    }
 }

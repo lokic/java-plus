@@ -1,9 +1,9 @@
 package com.github.lokic.javaplus.specification;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 public class NotSpecificationTest {
 
@@ -13,5 +13,8 @@ public class NotSpecificationTest {
             new NotSpecification<String>(ExpressionSpecification.falseSpec()).isSatisfiedBy(""));
         assertFalse(
             new NotSpecification<String>(ExpressionSpecification.trueSpec()).isSatisfiedBy(""));
+
+        assertTrue(ExpressionSpecification.falseSpec().not().isSatisfiedBy(""));
+        assertFalse(ExpressionSpecification.trueSpec().not().isSatisfiedBy(""));
     }
 }

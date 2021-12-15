@@ -3,11 +3,8 @@ package com.github.lokic.javaplus;
 import com.github.lokic.javaplus.functional.function.Function2;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -134,24 +131,24 @@ public class Collectors {
 
     public static <T, K, U, M extends Map<K, T>>
     Collector<Map.Entry<K, U>, ?, M> toMap(
-        Function<? super Map.Entry<K, U>, ? extends T> valueMapper, Supplier<M> mapSupplier) {
+            Function<? super Map.Entry<K, U>, ? extends T> valueMapper, Supplier<M> mapSupplier) {
         return java.util.stream.Collectors.toMap(
-            Map.Entry::getKey, valueMapper,
-            (u, v) -> {
-                throw new IllegalStateException(String.format("Duplicate key %s", u));
-            },
-            mapSupplier);
+                Map.Entry::getKey, valueMapper,
+                (u, v) -> {
+                    throw new IllegalStateException(String.format("Duplicate key %s", u));
+                },
+                mapSupplier);
     }
 
     public static <T1, T2, K, U, M extends Map<K, U>>
     Collector<Tuple2<T1, T2>, ?, M> toMap(
-        Function2<? super T1, ? super T2, ? extends K> keyMapper,
-        Function2<? super T1, ? super T2, ? extends U> valueMapper,
-        BinaryOperator<U> mergeFunction,
-        Supplier<M> mapSupplier) {
+            Function2<? super T1, ? super T2, ? extends K> keyMapper,
+            Function2<? super T1, ? super T2, ? extends U> valueMapper,
+            BinaryOperator<U> mergeFunction,
+            Supplier<M> mapSupplier) {
         return java.util.stream.Collectors.toMap(
-            t -> keyMapper.apply(t.getT1(), t.getT2()),
-            t -> valueMapper.apply(t.getT1(), t.getT2()),
+                t -> keyMapper.apply(t.getT1(), t.getT2()),
+                t -> valueMapper.apply(t.getT1(), t.getT2()),
                 mergeFunction, mapSupplier);
     }
 

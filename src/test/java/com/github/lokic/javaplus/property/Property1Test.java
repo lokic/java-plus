@@ -36,7 +36,7 @@ public class Property1Test {
 
         private final int code;
 
-        private TrafficLight(int code) {
+        TrafficLight(int code) {
             this.code = code;
         }
 

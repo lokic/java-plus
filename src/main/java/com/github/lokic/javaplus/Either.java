@@ -1,10 +1,11 @@
 package com.github.lokic.javaplus;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 public interface Either<L, R> {
 

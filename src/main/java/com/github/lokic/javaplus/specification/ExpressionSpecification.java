@@ -5,9 +5,9 @@ import java.util.function.Function;
 public class ExpressionSpecification<T> extends CompositeSpecification<T> {
 
     private final static ExpressionSpecification<?> TRUE_SPEC = new ExpressionSpecification<>(
-        x -> true);
+            x -> true);
     private final static ExpressionSpecification<?> FALSE_SPEC = new ExpressionSpecification<>(
-        x -> false);
+            x -> false);
 
     private final Function<T, Boolean> expression;
 

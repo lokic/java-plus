@@ -2,6 +2,7 @@ package com.github.lokic.javaplus;
 
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +79,20 @@ public class Join {
 
         public <K> JoinStream<T1, T2> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
             Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
-                .collect(Collectors.groupingBy(t -> matchKey(t, leftKey, rightKey)))
-                .values()
-                .stream()
-                .flatMap(this::cartesian)
-                .filter(this.joinMatcher);
+                    .collect(Collectors.groupingBy(t -> matchKey(t, leftKey, rightKey)))
+                    .values()
+                    .stream()
+                    .flatMap(this::cartesian)
+                    .filter(this.joinMatcher);
             return new JoinStream<>(stream);
         }
 
+        /**
+         * 笛卡尔积化
+         *
+         * @param li
+         * @return
+         */
         private Stream<Tuple2<T1, T2>> cartesian(List<Tuple2<T1, T2>> li) {
             Map<Boolean, List<Tuple2<T1, T2>>> map = li.stream()
                     .collect(Collectors.partitioningBy(this::isLeft, this.toListOrNullList()));

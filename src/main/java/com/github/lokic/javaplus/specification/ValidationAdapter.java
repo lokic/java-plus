@@ -2,6 +2,7 @@ package com.github.lokic.javaplus.specification;
 
 import com.github.lokic.javaplus.Either;
 import com.github.lokic.javaplus.validation.Validation;
+
 import java.util.function.Function;
 
 public class ValidationAdapter<E, T> implements Validation<E, T> {

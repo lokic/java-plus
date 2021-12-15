@@ -4,7 +4,7 @@ import com.github.lokic.javaplus.specification.CompositeSpecification;
 import com.github.lokic.javaplus.specification.Specification;
 
 public class SpecificationAdapter<E, T> extends CompositeSpecification<T> implements
-    Specification<T> {
+        Specification<T> {
 
     private final Validation<E, T> validation;
 
