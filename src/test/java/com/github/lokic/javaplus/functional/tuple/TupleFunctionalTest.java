@@ -1,6 +1,6 @@
 package com.github.lokic.javaplus.functional.tuple;
 
-import com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunctional;
+import com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsFunctional;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
 import org.assertj.core.util.Lists;
@@ -25,7 +25,7 @@ public class TupleFunctionalTest {
     public void cast_use_SneakyThrowFunction2() {
         // SneakyThrowFunction2 extends TupleFunction2
         Optional<String> res = Optional.of(Tuple.of("A", 1))
-                .map(SneakyThrowFunctional.function(this::toStrThrow));
+                .map(SneakyThrowsFunctional.function(this::toStrThrow));
         Assert.assertTrue(res.isPresent());
         Assert.assertEquals("A1", res.get());
     }
@@ -33,7 +33,7 @@ public class TupleFunctionalTest {
     @Test
     public void cast_use_SneakyThrowFunction1() {
         Optional<String> res = Optional.of(Tuple.of("A", 1))
-                .map(SneakyThrowFunctional.function(x -> x.getT1() + x.getT2()));
+                .map(SneakyThrowsFunctional.function(x -> x.getT1() + x.getT2()));
         Assert.assertTrue(res.isPresent());
         Assert.assertEquals("A1", res.get());
     }

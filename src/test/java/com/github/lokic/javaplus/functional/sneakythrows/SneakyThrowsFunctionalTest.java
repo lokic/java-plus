@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SneakyThrowFunctionalTest {
+public class SneakyThrowsFunctionalTest {
 
     @Test
     public void cast() {
         List<String> re = Stream.of(1, 2)
-                .map(SneakyThrowFunctional.function(this::toStrThrow))
+                .map(SneakyThrowsFunctional.function(this::toStrThrow))
                 .collect(Collectors.toList());
 
         Assert.assertEquals(Lists.newArrayList("1", "2"), re);

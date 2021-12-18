@@ -1,11 +1,11 @@
 package com.github.lokic.javaplus.functional.sneakythrows;
 
-import com.github.lokic.javaplus.functional.throwable.ThrowFunction2;
+import com.github.lokic.javaplus.functional.throwable.ThrowsFunction2;
 import com.github.lokic.javaplus.functional.tuple.TupleFunction2;
 import lombok.SneakyThrows;
 
 @FunctionalInterface
-public interface SneakyThrowFunction2<T1, T2, R> extends TupleFunction2<T1, T2, R>, ThrowFunction2<T1, T2, R> {
+public interface SneakyThrowsFunction2<T1, T2, R> extends TupleFunction2<T1, T2, R>, ThrowsFunction2<T1, T2, R> {
 
     @SneakyThrows
     @Override

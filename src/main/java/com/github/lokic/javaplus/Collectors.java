@@ -124,6 +124,22 @@ public class Collectors {
         }
     }
 
+    public static <K, U, M extends Map<K, U>>
+    Collector<Map.Entry<K, U>, ?, M> toMap(Supplier<M> mapSupplier) {
+        return toMap(Map.Entry::getValue, mapSupplier);
+    }
+
+    public static <T, K, U, M extends Map<K, T>>
+    Collector<Map.Entry<K, U>, ?, M> toMap(
+            Function<? super Map.Entry<K, U>, ? extends T> valueMapper, Supplier<M> mapSupplier) {
+        return java.util.stream.Collectors.toMap(
+                Map.Entry::getKey, valueMapper,
+                (u, v) -> {
+                    throw new IllegalStateException(String.format("Duplicate key %s", u));
+                },
+                mapSupplier);
+    }
+
     public static <T1, T2, K, U, M extends Map<K, U>>
     Collector<Tuple2<T1, T2>, ?, M> toMap(
             Function2<? super T1, ? super T2, ? extends K> keyMapper,

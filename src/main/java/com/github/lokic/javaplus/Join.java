@@ -32,8 +32,41 @@ public class Join {
         return new JoinType<>(left, right, t -> !(t.getT1() == null && t.getT2() == null));
     }
 
+    public static class JoinStream<T1, T2> {
+
+        private final Stream<Tuple2<T1, T2>> left;
+
+        private JoinStream(Stream<Tuple2<T1, T2>> stream) {
+            this.left = stream;
+        }
+
+        public Stream<Tuple2<T1, T2>> stream() {
+            return left;
+        }
+
+        public <R> Stream<R> flattenStream(Function<? super Tuple2<T1, T2>, ? extends R> mapper) {
+            return left.map(mapper);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Stream<T3> right) {
+            return Join.innerJoin(left, right);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Stream<T3> right) {
+            return Join.leftOuterJoin(left, right);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Stream<T3> right) {
+            return Join.rightOuterJoin(left, right);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Stream<T3> right) {
+            return Join.fullOuterJoin(left, right);
+        }
+    }
 
     public static class JoinType<T1, T2> {
+
         private final Stream<Tuple2<T1, T2>> leftWrappedStream;
         private final Stream<Tuple2<T1, T2>> rightWrappedStream;
         private final Predicate<Tuple2<T1, T2>> joinMatcher;
@@ -44,15 +77,22 @@ public class Join {
             this.joinMatcher = joinMatcher;
         }
 
-        public <K> Stream<Tuple2<T1, T2>> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
-            return Stream.concat(leftWrappedStream, rightWrappedStream)
+        public <K> JoinStream<T1, T2> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
+            Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
                     .collect(Collectors.groupingBy(t -> matchKey(t, leftKey, rightKey)))
                     .values()
                     .stream()
                     .flatMap(this::cartesian)
                     .filter(this.joinMatcher);
+            return new JoinStream<>(stream);
         }
 
+        /**
+         * 笛卡尔积化
+         *
+         * @param li
+         * @return
+         */
         private Stream<Tuple2<T1, T2>> cartesian(List<Tuple2<T1, T2>> li) {
             Map<Boolean, List<Tuple2<T1, T2>>> map = li.stream()
                     .collect(Collectors.partitioningBy(this::isLeft, this.toListOrNullList()));
@@ -91,18 +131,14 @@ public class Join {
                     },
                     l -> {
                         if (l == null || l.isEmpty()) {
-                            return nullList();
+                            return NullData.nullList();
                         }
                         return l;
                     }
             );
         }
 
-        private <T> List<T> nullList() {
-            List<T> li = new ArrayList<>();
-            li.add(null);
-            return li;
-        }
+
     }
 
 }
