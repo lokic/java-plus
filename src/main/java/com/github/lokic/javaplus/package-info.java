@@ -10,16 +10,16 @@
  * {@link java.util.function.Supplier}相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaplus.Lazy}
- *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowSupplier}
- *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowSupplier}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsSupplier}
+ *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowsSupplier}
  * </ul>
  * <p>
  * {@link java.util.function.Function}相关扩展：
  * <ul>
  *      <li>{@link com.github.lokic.javaplus.Functions}
- *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction1}
- *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction2}
- *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction3}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsFunction1}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsFunction2}
+ *      <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsFunction3}
  *      <li>{@link com.github.lokic.javaplus.functional.tuple.TupleFunction2}
  *      <li>{@link com.github.lokic.javaplus.functional.tuple.TupleFunction3}
  *      <li>{@link com.github.lokic.javaplus.functional.tuple.TupleFunction4}
@@ -31,17 +31,17 @@
  * {@link java.util.function.Consumer}相关扩展：
  * <ul>
  *     <li>{@link com.github.lokic.javaplus.Consumers}
- *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowConsumer1}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsConsumer1}
  *     <li>{@link com.github.lokic.javaplus.functional.tuple.TupleConsumer2}
  *     <li>{@link com.github.lokic.javaplus.functional.tuple.TupleConsumer3}
  *     <li>{@link com.github.lokic.javaplus.functional.entry.EntryConsumer}
- *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowConsumer1}
+ *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowsConsumer1}
  * </ul>
  * <p>
  * {@link java.lang.Runnable} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowRunnable}
- *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowRunnable}
+ *     <li>{@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsRunnable}
+ *     <li>{@link com.github.lokic.javaplus.functional.throwable.ThrowsRunnable}
  * </ul>
  * <p>
  * {@link java.util.Optional} 相关扩展：

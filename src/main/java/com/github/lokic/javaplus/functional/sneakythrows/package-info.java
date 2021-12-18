@@ -10,7 +10,7 @@
  * 这样既不需要定义一个统一非受检异常，也不需要定义很多特殊的非受检异常。需要捕获异常的时候也十分方便，直接try catch受检异常就可以了;
  * 在代码中也可以更加方便得使用方法引用，使代码看起来更加简洁和优雅。
  * <p>
- * 如下 {@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowFunction1 } 的使用：
+ * 如下 {@link com.github.lokic.javaplus.functional.sneakythrows.SneakyThrowsFunction1 } 的使用：
  * <pre>{@code
  *      Optional.of(0)
  *              .map( (SneakyThrowFunction1<Integer, Integer>) this::throwableMethod );

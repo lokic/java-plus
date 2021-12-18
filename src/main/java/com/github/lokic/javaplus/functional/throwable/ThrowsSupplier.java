@@ -1,8 +1,7 @@
 package com.github.lokic.javaplus.functional.throwable;
 
-
 @FunctionalInterface
-public interface ThrowRunnable {
+public interface ThrowsSupplier<T> {
 
-    void throwableRun() throws Throwable;
+    T throwableGet() throws Throwable;
 }
