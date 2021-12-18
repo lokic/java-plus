@@ -131,18 +131,14 @@ public class Join {
                     },
                     l -> {
                         if (l == null || l.isEmpty()) {
-                            return nullList();
+                            return NullData.nullList();
                         }
                         return l;
                     }
             );
         }
 
-        private <T> List<T> nullList() {
-            List<T> li = new ArrayList<>();
-            li.add(null);
-            return li;
-        }
+
     }
 
 }
