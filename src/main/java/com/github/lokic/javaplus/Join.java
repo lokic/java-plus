@@ -3,10 +3,7 @@ package com.github.lokic.javaplus;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
@@ -71,7 +68,7 @@ public class Join {
         private final Stream<Tuple2<T1, T2>> rightWrappedStream;
         private final Predicate<Tuple2<T1, T2>> joinMatcher;
 
-        public JoinType(Stream<T1> left, Stream<T2> right, Predicate<Tuple2<T1, T2>> joinMatcher) {
+        private JoinType(Stream<T1> left, Stream<T2> right, Predicate<Tuple2<T1, T2>> joinMatcher) {
             this.leftWrappedStream = left.map(l -> Tuple.of(Objects.requireNonNull(l), null));
             this.rightWrappedStream = right.map(r -> Tuple.of(null, Objects.requireNonNull(r)));
             this.joinMatcher = joinMatcher;
@@ -79,7 +76,17 @@ public class Join {
 
         public <K> JoinStream<T1, T2> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
             Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
-                    .collect(Collectors.groupingBy(t -> matchKey(t, leftKey, rightKey)))
+                    .collect(Collectors.toMap(
+                            t -> matchKey(t, leftKey, rightKey),
+                            Collections::singletonList,
+                            (a, b) -> {
+                                List<Tuple2<T1, T2>> li = new ArrayList<>();
+                                li.addAll(a);
+                                li.addAll(b);
+                                return li;
+                            },
+                            LinkedHashMap::new
+                    ))
                     .values()
                     .stream()
                     .flatMap(this::cartesian)

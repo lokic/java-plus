@@ -106,4 +106,29 @@ public class JoinTest {
                         Tuple.of(3, "3", null),
                         Tuple.of(4, null, null));
     }
+
+    @Test
+    public void test_nullKey() {
+        List<Tuple2<Integer, Integer>> list = Join.leftOuterJoin(Stream.of(new KeyBox(1), new KeyBox(2), new KeyBox(3), new KeyBox(4), new KeyBox(null)), Stream.of(2, 3, 5))
+                .on(KeyBox::getKey, Function.identity())
+                .stream()
+                .map(t -> Tuple.of(t.getT1().getKey(), t.getT2()))
+                .collect(Collectors.toList());
+        Assertions.assertThat(list)
+                .containsExactly(Tuple.of(1, null), Tuple.of(2, 2), Tuple.of(3, 3),
+                        Tuple.of(4, null), Tuple.of(null, null));
+
+    }
+
+    public static class KeyBox {
+        private final Integer key;
+
+        public KeyBox(Integer key) {
+            this.key = key;
+        }
+
+        public Integer getKey() {
+            return key;
+        }
+    }
 }

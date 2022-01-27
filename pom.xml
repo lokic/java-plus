@@ -6,7 +6,7 @@
 
     <groupId>com.github.lokic</groupId>
     <artifactId>java-plus</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <name>java-plus</name>
     <description>Provide some useful extensions on the basis of java8 to make java more usable.</description>
     <url>https://github.com/lokic/java-plus</url>
