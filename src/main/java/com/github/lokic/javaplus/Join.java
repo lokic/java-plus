@@ -29,6 +29,22 @@ public class Join {
         return new JoinType<>(left, right, t -> !(t.getT1() == null && t.getT2() == null));
     }
 
+    public static <T1, T2> JoinType<T1, T2> innerJoin(Collection<T1> left, Collection<T2> right) {
+        return innerJoin(left.stream(), right.stream());
+    }
+
+    public static <T1, T2> JoinType<T1, T2> leftOuterJoin(Collection<T1> left, Collection<T2> right) {
+        return leftOuterJoin(left.stream(), right.stream());
+    }
+
+    public static <T1, T2> JoinType<T1, T2> rightOuterJoin(Collection<T1> left, Collection<T2> right) {
+        return rightOuterJoin(left.stream(), right.stream());
+    }
+
+    public static <T1, T2> JoinType<T1, T2> fullOuterJoin(Collection<T1> left, Collection<T2> right) {
+        return fullOuterJoin(left.stream(), right.stream());
+    }
+
     public static class JoinStream<T1, T2> {
 
         private final Stream<Tuple2<T1, T2>> left;
@@ -49,16 +65,32 @@ public class Join {
             return Join.innerJoin(left, right);
         }
 
+        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Collection<T3> right) {
+            return Join.innerJoin(left, right.stream());
+        }
+
         public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Stream<T3> right) {
             return Join.leftOuterJoin(left, right);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Collection<T3> right) {
+            return Join.leftOuterJoin(left, right.stream());
         }
 
         public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Stream<T3> right) {
             return Join.rightOuterJoin(left, right);
         }
 
+        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Collection<T3> right) {
+            return Join.rightOuterJoin(left, right.stream());
+        }
+
         public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Stream<T3> right) {
             return Join.fullOuterJoin(left, right);
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Collection<T3> right) {
+            return Join.fullOuterJoin(left, right.stream());
         }
     }
 
@@ -144,8 +176,6 @@ public class Join {
                     }
             );
         }
-
-
     }
 
 }
