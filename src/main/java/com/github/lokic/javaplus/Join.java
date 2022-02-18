@@ -65,32 +65,32 @@ public class Join {
             return Join.innerJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Collection<T3> right) {
-            return Join.innerJoin(left, right.stream());
-        }
-
         public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Stream<T3> right) {
             return Join.leftOuterJoin(left, right);
-        }
-
-        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Collection<T3> right) {
-            return Join.leftOuterJoin(left, right.stream());
         }
 
         public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Stream<T3> right) {
             return Join.rightOuterJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Collection<T3> right) {
-            return Join.rightOuterJoin(left, right.stream());
-        }
-
         public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Stream<T3> right) {
             return Join.fullOuterJoin(left, right);
         }
 
+        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Collection<T3> right) {
+            return innerJoin(right.stream());
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Collection<T3> right) {
+            return leftOuterJoin(right.stream());
+        }
+
+        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Collection<T3> right) {
+            return rightOuterJoin(right.stream());
+        }
+
         public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Collection<T3> right) {
-            return Join.fullOuterJoin(left, right.stream());
+            return fullOuterJoin(right.stream());
         }
     }
 
