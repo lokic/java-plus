@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-class NullData {
+public class NullData {
     private static final List<?> NULL_LIST = createNullList();
 
     private static <T> List<T> createNullList() {

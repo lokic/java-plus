@@ -1,5 +1,6 @@
-package com.github.lokic.javaplus;
+package com.github.lokic.javaplus.join;
 
+import com.github.lokic.javaplus.NullData;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
 
@@ -12,6 +13,9 @@ import java.util.stream.Stream;
 
 public class Join {
 
+    public static <T> JoinStream<T> stream(Stream<T> stream) {
+        return new JoinStream<>(stream);
+    }
 
     public static <T1, T2> JoinType<T1, T2> innerJoin(Stream<T1> left, Stream<T2> right) {
         return new JoinType<>(left, right, t -> t.getT1() != null && t.getT2() != null);
@@ -29,68 +33,66 @@ public class Join {
         return new JoinType<>(left, right, t -> !(t.getT1() == null && t.getT2() == null));
     }
 
-    public static <T1, T2> JoinType<T1, T2> innerJoin(Collection<T1> left, Collection<T2> right) {
-        return innerJoin(left.stream(), right.stream());
-    }
 
-    public static <T1, T2> JoinType<T1, T2> leftOuterJoin(Collection<T1> left, Collection<T2> right) {
-        return leftOuterJoin(left.stream(), right.stream());
-    }
+    public static class JoinStream<T> {
+        private final Stream<T> left;
 
-    public static <T1, T2> JoinType<T1, T2> rightOuterJoin(Collection<T1> left, Collection<T2> right) {
-        return rightOuterJoin(left.stream(), right.stream());
-    }
-
-    public static <T1, T2> JoinType<T1, T2> fullOuterJoin(Collection<T1> left, Collection<T2> right) {
-        return fullOuterJoin(left.stream(), right.stream());
-    }
-
-    public static class JoinStream<T1, T2> {
-
-        private final Stream<Tuple2<T1, T2>> left;
-
-        private JoinStream(Stream<Tuple2<T1, T2>> stream) {
-            this.left = stream;
+        private JoinStream(Stream<T> left) {
+            this.left = left;
         }
 
-        public Stream<Tuple2<T1, T2>> stream() {
+        public Stream<T> stream() {
             return left;
         }
 
-        public <R> Stream<R> flattenStream(Function<? super Tuple2<T1, T2>, ? extends R> mapper) {
+        public <R> Stream<R> flattenStream(Function<? super T, ? extends R> mapper) {
             return left.map(mapper);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Stream<T3> right) {
+        public <T3> JoinType<T, T3> innerJoin(Stream<T3> right) {
             return Join.innerJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Stream<T3> right) {
+        public <T3> JoinType<T, T3> leftOuterJoin(Stream<T3> right) {
             return Join.leftOuterJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Stream<T3> right) {
+        public <T3> JoinType<T, T3> rightOuterJoin(Stream<T3> right) {
             return Join.rightOuterJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Stream<T3> right) {
+        public <T3> JoinType<T, T3> fullOuterJoin(Stream<T3> right) {
             return Join.fullOuterJoin(left, right);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> innerJoin(Collection<T3> right) {
-            return innerJoin(right.stream());
+        public <U, K, R> JoinStream<R> innerJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
+            Stream<R> stream = innerJoin(right)
+                    .on(on.getLeftKey(), on.getRightKey())
+                    .flattenStream(on.getFlatten());
+            return new JoinStream<>(stream);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> leftOuterJoin(Collection<T3> right) {
-            return leftOuterJoin(right.stream());
+        public <U, K, R> JoinStream<R> leftOuterJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
+            Stream<R> stream = leftOuterJoin(right)
+                    .on(on.getLeftKey(), on.getRightKey())
+                    .flattenStream(on.getFlatten());
+            return new JoinStream<>(stream);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> rightOuterJoin(Collection<T3> right) {
-            return rightOuterJoin(right.stream());
+
+        public <U, K, R> JoinStream<R> rightOuterJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
+            Stream<R> stream = rightOuterJoin(right)
+                    .on(on.getLeftKey(), on.getRightKey())
+                    .flattenStream(on.getFlatten());
+            return new JoinStream<>(stream);
         }
 
-        public <T3> JoinType<Tuple2<T1, T2>, T3> fullOuterJoin(Collection<T3> right) {
-            return fullOuterJoin(right.stream());
+
+        public <U, K, R> JoinStream<R> fullOuterJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
+            Stream<R> stream = fullOuterJoin(right)
+                    .on(on.getLeftKey(), on.getRightKey())
+                    .flattenStream(on.getFlatten());
+            return new JoinStream<>(stream);
         }
     }
 
@@ -106,7 +108,7 @@ public class Join {
             this.joinMatcher = joinMatcher;
         }
 
-        public <K> JoinStream<T1, T2> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
+        public <K> JoinStream<Tuple2<T1, T2>> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
             Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
                     .collect(Collectors.toMap(
                             t -> matchKey(t, leftKey, rightKey),

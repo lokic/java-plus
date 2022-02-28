@@ -1,4 +1,4 @@
-package com.github.lokic.javaplus;
+package com.github.lokic.javaplus.join;
 
 import com.github.lokic.javaplus.functional.tuple.TupleFlattened;
 import com.github.lokic.javaplus.functional.tuple.TupleFunctional;
