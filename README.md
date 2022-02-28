@@ -23,7 +23,7 @@
 
   - [ThrowXxxx](https://github.com/lokic/java-plus/tree/master/src/main/java/com/github/lokic/javaplus/functional/throwable)
     ：抛出受检异常的FunctionalInterface
-  - [SneakythrowXxxx](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/sneakythrows)
+  - [SneakythrowsXxxx](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/sneakythrows)
     ：偷偷抛出受检异常的FunctionalInterface
     - 在函数式编程中，如果调用一些方法是会抛出受检异常的，又希望lambda在碰到异常的情况下直接结束，就需要在lambda中强制try catch，然后转换成非受检异常抛出，这么做多了一层转换甚是繁琐。
     - 使用 SneakyThrowXxxx 的FunctionInterface，可以直接把受检异常变成非受检异常抛出，且不需要任何异常类的重新包装，
@@ -41,7 +41,7 @@
 
   - [EntryFunctional](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/entry/EntryFunctional.java)
     ： 转换成Entry相关FunctionalInterface
-  - [SneakyThrowFunctional](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/sneakythrows/SneakyThrowFunctional.java)
+  - [SneakyThrowsFunctional](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/sneakythrows/SneakyThrowsFunctional.java)
     ：转换成SneakyThrow相关的FunctionalInterface
   - [TupleFunctional](https://github.com/lokic/java-plus/blob/master/src/main/java/com/github/lokic/javaplus/functional/tuple/TupleFunctional.java)
     ：转换成Tuple（元组）相关的FunctionalInterface
