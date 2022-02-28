@@ -5,19 +5,19 @@ import com.github.lokic.javaplus.tuple.*;
 
 import java.util.function.Function;
 
-public class TupleFlattened {
+public interface TupleFlattened {
 
-    public static <T1, T2, T3> Tuple3<T1, T2, T3> flatten3(Tuple2<Tuple2<T1, T2>, T3> t) {
+    static <T1, T2, T3> Tuple3<T1, T2, T3> flatten3(Tuple2<Tuple2<T1, T2>, T3> t) {
         return Tuple.of(t.getT1().getT1(), t.getT1().getT2(), t.getT2());
     }
 
-    public static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> flatten4(
+    static <T1, T2, T3, T4> Tuple4<T1, T2, T3, T4> flatten4(
             Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4> t) {
         return Tuple.of(
                 t.getT1().getT1().getT1(), t.getT1().getT1().getT2(), t.getT1().getT2(), t.getT2());
     }
 
-    public static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> flatten5(
+    static <T1, T2, T3, T4, T5> Tuple5<T1, T2, T3, T4, T5> flatten5(
             Tuple2<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, T5> t) {
         return Tuple.of(
                 t.getT1().getT1().getT1().getT1(),
@@ -27,7 +27,7 @@ public class TupleFlattened {
                 t.getT2());
     }
 
-    public static <T1, T2, T3, T4, T5, T6> Tuple6<T1, T2, T3, T4, T5, T6> flatten6(
+    static <T1, T2, T3, T4, T5, T6> Tuple6<T1, T2, T3, T4, T5, T6> flatten6(
             Tuple2<Tuple2<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, T5>, T6> t) {
         return Tuple.of(
                 t.getT1().getT1().getT1().getT1().getT1(),
@@ -38,11 +38,11 @@ public class TupleFlattened {
                 t.getT2());
     }
 
-    public static <T1, T2, R> Function<Tuple2<T1, T2>, R> flatten(Function2<T1, T2, R> function) {
+    static <T1, T2, R> Function<Tuple2<T1, T2>, R> flatten(Function2<T1, T2, R> function) {
         return t -> function.apply(t.getT1(), t.getT2());
     }
 
-    public static <T1, T2, T3, R> Function<Tuple2<Tuple2<T1, T2>, T3>, R> flatten(
+    static <T1, T2, T3, R> Function<Tuple2<Tuple2<T1, T2>, T3>, R> flatten(
             Function3<T1, T2, T3, R> function) {
         return t -> {
             Tuple3<T1, T2, T3> t3 = flatten3(t);
@@ -50,7 +50,7 @@ public class TupleFlattened {
         };
     }
 
-    public static <T1, T2, T3, T4, R> Function<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, R> flatten(
+    static <T1, T2, T3, T4, R> Function<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, R> flatten(
             Function4<T1, T2, T3, T4, R> function) {
         return t -> {
             Tuple4<T1, T2, T3, T4> t4 = flatten4(t);
@@ -58,7 +58,7 @@ public class TupleFlattened {
         };
     }
 
-    public static <T1, T2, T3, T4, T5, R>
+    static <T1, T2, T3, T4, T5, R>
     Function<Tuple2<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, T5>, R> flatten(
             Function5<T1, T2, T3, T4, T5, R> function) {
         return t -> {
@@ -67,7 +67,7 @@ public class TupleFlattened {
         };
     }
 
-    public static <T1, T2, T3, T4, T5, T6, R>
+    static <T1, T2, T3, T4, T5, T6, R>
     Function<Tuple2<Tuple2<Tuple2<Tuple2<Tuple2<T1, T2>, T3>, T4>, T5>, T6>, R> flatten(
             Function6<T1, T2, T3, T4, T5, T6, R> function) {
         return t -> {
