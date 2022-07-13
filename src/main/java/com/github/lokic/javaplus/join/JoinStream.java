@@ -1,5 +1,7 @@
 package com.github.lokic.javaplus.join;
 
+import com.github.lokic.javaplus.tuple.Tuple;
+
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -18,22 +20,6 @@ public class JoinStream<T> {
         return left.map(mapper);
     }
 
-    public <T3> JoinType<T, T3> innerJoin(Stream<T3> right) {
-        return Join.innerJoin(left, right);
-    }
-
-    public <T3> JoinType<T, T3> leftOuterJoin(Stream<T3> right) {
-        return Join.leftOuterJoin(left, right);
-    }
-
-    public <T3> JoinType<T, T3> rightOuterJoin(Stream<T3> right) {
-        return Join.rightOuterJoin(left, right);
-    }
-
-    public <T3> JoinType<T, T3> fullOuterJoin(Stream<T3> right) {
-        return Join.fullOuterJoin(left, right);
-    }
-
     public <U, K, R> JoinStream<R> innerJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
         Stream<R> stream = innerJoin(right)
                 .on(on.getLeftKey(), on.getRightKey())
@@ -50,9 +36,10 @@ public class JoinStream<T> {
 
 
     public <U, K, R> JoinStream<R> rightOuterJoin(Stream<U> right, JoinOn<T, U, K, R> on) {
-        Stream<R> stream = rightOuterJoin(right)
-                .on(on.getLeftKey(), on.getRightKey())
-                .flattenStream(on.getFlatten());
+        Stream<R> stream = new JoinStream<>(right)
+                .leftOuterJoin(left)
+                .on(on.getRightKey(), on.getLeftKey())
+                .flattenStream(t -> on.getFlatten().apply(Tuple.of(t.getT2(), t.getT1())));
         return new JoinStream<>(stream);
     }
 
@@ -63,4 +50,17 @@ public class JoinStream<T> {
                 .flattenStream(on.getFlatten());
         return new JoinStream<>(stream);
     }
+
+    private <U> JoinType<T, U> innerJoin(Stream<U> right) {
+        return new JoinType<>(left, right, t -> t.getT1() != null && t.getT2() != null);
+    }
+
+    private <U> JoinType<T, U> leftOuterJoin(Stream<U> right) {
+        return new JoinType<>(left, right, t -> t.getT1() != null);
+    }
+
+    private <U> JoinType<T, U> fullOuterJoin(Stream<U> right) {
+        return new JoinType<>(left, right, t -> !(t.getT1() == null && t.getT2() == null));
+    }
+
 }
