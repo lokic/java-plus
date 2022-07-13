@@ -72,6 +72,17 @@ public class JoinTest {
                 .containsExactly(Tuple.of(2, "2"), Tuple.of(3, "3"), Tuple.of(null, "5"));
     }
 
+    @Test
+    public void test_order_rightOuterJoin() {
+        List<Tuple2<Integer, String>> list = Join.stream(Stream.of(1, 2, 3, 4))
+                .rightOuterJoin(Stream.of("3", "2", "5"), on(i -> String.valueOf(i), Function.identity()))
+                .stream()
+                .collect(Collectors.toList());
+
+        Assertions.assertThat(list)
+                .containsExactly(Tuple.of(3, "3"), Tuple.of(2, "2"), Tuple.of(null, "5"));
+    }
+
 
     @Test
     public void test_fullOuterJoin() {
