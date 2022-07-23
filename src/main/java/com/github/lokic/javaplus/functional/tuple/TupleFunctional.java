@@ -43,4 +43,18 @@ public interface TupleFunctional {
     static <T1, T2, T3, T4, T5, T6, R> TupleFunction6<T1, T2, T3, T4, T5, T6, R> function(Function6<T1, T2, T3, T4, T5, T6, R> function6) {
         return function6::apply;
     }
+
+    static <T1, T2, T3, T4, T5, T6, T7, R> TupleFunction7<T1, T2, T3, T4, T5, T6, T7, R> function(Function7<T1, T2, T3, T4, T5, T6, T7, R> function7) {
+        return function7::apply;
+    }
+
+    static <T1, T2, T3, T4, T5, T6, T7, T8, R> TupleFunction8<T1, T2, T3, T4, T5, T6, T7, T8, R> function(Function8<T1, T2, T3, T4, T5, T6, T7, T8, R> function8) {
+        return function8::apply;
+    }
+
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> TupleFunction9<T1, T2, T3, T4, T5, T6, T7, T8, T9, R> function(Function9<T1, T2, T3, T4, T5, T6, T7, T8, T9, R> function9) {
+        return function9::apply;
+    }
+
+
 }

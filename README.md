@@ -49,7 +49,7 @@
 - Lazy：带缓存功能的 Supplier
 
   - Supplier 每一次执行 Supplier.get() 都会执行一次 Supplier.get() 内的业务逻辑。 如果在一些Supplier.get() 比较耗时的场景，且多次执行 Supplier.get()
-    结果相同的情况下， 我们没有必要多次执行，只需要把执行第一次的结果保存下来，之后多次调用直接返回即可，Lazy 就是这个目的设计出来的。
+    ，结果相同的情况下， 我们没有必要多次执行，只需要把执行第一次的结果保存下来，之后多次调用直接返回即可，Lazy 就是这个目的设计出来的。
 
 - [Property](https://github.com/lokic/java-plus/tree/master/src/main/java/com/github/lokic/javaplus/property)
   ：在定义枚举类之后，经常需要基于枚举类的某个字段作为key来查询枚举，抽象出这个模块来实现key到枚举的映射和转换逻辑，[示例](https://github.com/lokic/java-plus/tree/master/src/test/java/com/github/lokic/javaplus/property)
@@ -68,4 +68,19 @@
 
   - Collectors.Reversed：倒序相关
   - Collectors.Distinct：去重相关
+
+- [Join](https://github.com/lokic/java-plus/tree/master/src/main/java/com/github/lokic/javaplus/join/Join.java)
+  ：一种类似SQL中join的操作，可以把内存中的Stream流像操作数据库中的表一样进行各种join
+
+   ```java
+   Stream<Integer> streamA = Stream.of(1, 2, 3, 4);
+   Stream<String> streamB = Stream.of("1", "2", "3");
+   
+   Join.stream(streamA)
+     .leftOuterJoin(streamB, Join.on(a -> String.valueOf(a), b -> b)
+     .stream()   // 转成Stream之后是一个多元组的流，可以结合TupleFunctional进行很多便利的操作
+     .map(...)
+   ```
+
+  
 
