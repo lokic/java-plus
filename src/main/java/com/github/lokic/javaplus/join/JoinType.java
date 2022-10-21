@@ -4,6 +4,8 @@ import com.github.lokic.javaplus.Functions;
 import com.github.lokic.javaplus.NullData;
 import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.*;
 import java.util.function.Function;
@@ -14,23 +16,23 @@ import java.util.stream.Stream;
 
 public class JoinType<T1, T2> {
 
-    private final Stream<Tuple2<Integer, Tuple2<T1, T2>>> leftWrappedStream;
-    private final Stream<Tuple2<Integer, Tuple2<T1, T2>>> rightWrappedStream;
+    private final Stream<IndexWithData<Integer, Tuple2<T1, T2>>> leftWrappedStream;
+    private final Stream<IndexWithData<Integer, Tuple2<T1, T2>>> rightWrappedStream;
     private final Predicate<Tuple2<T1, T2>> joinMatcher;
 
     JoinType(Stream<T1> left, Stream<T2> right, Predicate<Tuple2<T1, T2>> joinMatcher) {
-        this.leftWrappedStream = left.map(l -> Tuple.of(Objects.requireNonNull(l), (T2) null)).map(Functions.mapWithIndex(Tuple::of));
-        this.rightWrappedStream = right.map(r -> Tuple.of((T1) null, Objects.requireNonNull(r))).map(Functions.mapWithIndex(Tuple::of));
+        this.leftWrappedStream = left.map(l -> Tuple.of(Objects.requireNonNull(l), (T2) null)).map(Functions.mapWithIndex(IndexWithData::new));
+        this.rightWrappedStream = right.map(r -> Tuple.of((T1) null, Objects.requireNonNull(r))).map(Functions.mapWithIndex(IndexWithData::new));
         this.joinMatcher = joinMatcher;
     }
 
     public <K> JoinStream<Tuple2<T1, T2>> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
         Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
                 .collect(Collectors.toMap(
-                        t -> matchKey(t.getT2(), leftKey, rightKey),
+                        t -> matchKey(t.getData(), leftKey, rightKey),
                         Collections::singletonList,
                         (a, b) -> {
-                            List<Tuple2<Integer, Tuple2<T1, T2>>> li = new ArrayList<>();
+                            List<IndexWithData<Integer, Tuple2<T1, T2>>> li = new ArrayList<>();
                             li.addAll(a);
                             li.addAll(b);
                             return li;
@@ -41,8 +43,8 @@ public class JoinType<T1, T2> {
                 .stream()
                 .flatMap(this::cartesian)
                 .sorted(this::compare)
-                .filter(t -> joinMatcher.test(t.getT2()))
-                .map(Tuple2::getT2);
+                .filter(t -> joinMatcher.test(t.getData()))
+                .map(IndexWithData::getData);
         return new JoinStream<>(stream);
     }
 
@@ -52,21 +54,21 @@ public class JoinType<T1, T2> {
      * @param li
      * @return
      */
-    private Stream<Tuple2<Tuple2<Integer, Integer>, Tuple2<T1, T2>>> cartesian(List<Tuple2<Integer, Tuple2<T1, T2>>> li) {
-        Map<Boolean, List<Tuple2<Integer, Tuple2<T1, T2>>>> map = li.stream()
-                .collect(Collectors.partitioningBy(t -> isLeft(t.getT2()), this.toListOrNullList()));
-        List<Tuple2<Integer, Tuple2<T1, T2>>> left = map.get(true);
-        List<Tuple2<Integer, Tuple2<T1, T2>>> right = map.get(false);
+    private Stream<IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>>> cartesian(List<IndexWithData<Integer, Tuple2<T1, T2>>> li) {
+        Map<Boolean, List<IndexWithData<Integer, Tuple2<T1, T2>>>> map = li.stream()
+                .collect(Collectors.partitioningBy(t -> isLeft(t.getData()), this.toListOrNullList()));
+        List<IndexWithData<Integer, Tuple2<T1, T2>>> left = map.get(true);
+        List<IndexWithData<Integer, Tuple2<T1, T2>>> right = map.get(false);
         return left.stream()
                 .flatMap(l -> right.stream()
-                        .map(r -> this.merge(l, r)));
+                        .map(r -> merge(l, r)));
     }
 
 
-    private Tuple2<Tuple2<Integer, Integer>, Tuple2<T1, T2>> merge(Tuple2<Integer, Tuple2<T1, T2>> l, Tuple2<Integer, Tuple2<T1, T2>> r) {
-        return Tuple.of(
-                Tuple.of(l == null ? null : l.getT1(), r == null ? null : r.getT1()),
-                Tuple.of(l == null ? null : l.getT2().getT1(), r == null ? null : r.getT2().getT2()));
+    private IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>> merge(IndexWithData<Integer, Tuple2<T1, T2>> l, IndexWithData<Integer, Tuple2<T1, T2>> r) {
+        return new IndexWithData<>(
+                Tuple.of(l == null ? null : l.getIndex(), r == null ? null : r.getIndex()),
+                Tuple.of(l == null ? null : l.getData().getT1(), r == null ? null : r.getData().getT2()));
     }
 
     private boolean isLeft(Tuple2<T1, T2> t) {
@@ -100,13 +102,13 @@ public class JoinType<T1, T2> {
         );
     }
 
-    private int compare(Tuple2<Tuple2<Integer, Integer>, Tuple2<T1, T2>> a, Tuple2<Tuple2<Integer, Integer>, Tuple2<T1, T2>> b) {
-        Tuple2<Integer, Integer> ta = a.getT1();
-        Tuple2<Integer, Integer> tb = b.getT1();
+    private int compare(IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>> a, IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>> b) {
+        Tuple2<Integer, Integer> aIndex = a.getIndex();
+        Tuple2<Integer, Integer> bIndex = b.getIndex();
 
-        int cmp = compare(ta.getT1(), tb.getT1());
+        int cmp = compare(aIndex.getT1(), bIndex.getT1());
         if (cmp == 0) {
-            return compare(ta.getT2(), tb.getT2());
+            return compare(aIndex.getT2(), bIndex.getT2());
         }
         return cmp;
     }
@@ -123,6 +125,13 @@ public class JoinType<T1, T2> {
             return -1;
         }
         return Integer.compare(a, b);
+    }
+
+    @AllArgsConstructor
+    @Getter
+    private static class IndexWithData<K, T> {
+        private K index;
+        private T data;
     }
 
 }
