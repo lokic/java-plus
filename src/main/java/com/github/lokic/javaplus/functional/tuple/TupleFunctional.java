@@ -2,9 +2,11 @@ package com.github.lokic.javaplus.functional.tuple;
 
 import com.github.lokic.javaplus.functional.consumer.Consumer2;
 import com.github.lokic.javaplus.functional.consumer.Consumer3;
+import com.github.lokic.javaplus.functional.consumer.Consumer4;
 import com.github.lokic.javaplus.functional.function.*;
 import com.github.lokic.javaplus.functional.predicate.Predicate2;
 import com.github.lokic.javaplus.functional.predicate.Predicate3;
+import com.github.lokic.javaplus.functional.predicate.Predicate4;
 
 public interface TupleFunctional {
 
@@ -16,12 +18,20 @@ public interface TupleFunctional {
         return consumer3::accept;
     }
 
+    static <T1, T2, T3, T4> TupleConsumer4<T1, T2, T3, T4> consumer(Consumer4<T1, T2, T3, T4> consumer4) {
+        return consumer4::accept;
+    }
+
     static <T1, T2> TuplePredicate2<T1, T2> predicate(Predicate2<T1, T2> predicate2) {
         return predicate2::test;
     }
 
     static <T1, T2, T3> TuplePredicate3<T1, T2, T3> predicate(Predicate3<T1, T2, T3> predicate3) {
         return predicate3::test;
+    }
+
+    static <T1, T2, T3, T4> TuplePredicate4<T1, T2, T3, T4> predicate(Predicate4<T1, T2, T3, T4> predicate4) {
+        return predicate4::test;
     }
 
     static <T1, T2, R> TupleFunction2<T1, T2, R> function(Function2<T1, T2, R> function2) {
