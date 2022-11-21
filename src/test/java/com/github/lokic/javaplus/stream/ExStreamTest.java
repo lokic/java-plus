@@ -11,11 +11,12 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.lokic.javaplus.join.Join.on;
-import static com.github.lokic.javaplus.stream.ExStream.Func.*;
+import static com.github.lokic.javaplus.stream.ExStreamTest.Func.*;
 
 public class ExStreamTest {
 
@@ -62,14 +63,14 @@ public class ExStreamTest {
         Assert.assertEquals(Lists.newArrayList("1", "3"), li);
     }
 
-//    @Test
-//    public void test_filter() {
-//        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
-//                .filter(x -> !"2".equals(x))
-//                .stream()
-//                .collect(Collectors.toList());
-//        Assert.assertEquals(Lists.newArrayList("1", "3"), li);
-//    }
+    @Test
+    public void test_filter() {
+        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
+                .filter(x -> !"2".equals(x))
+                .stream()
+                .collect(Collectors.toList());
+        Assert.assertEquals(Lists.newArrayList("1", "3"), li);
+    }
 
     @Test
     public void test_map() {
@@ -80,15 +81,14 @@ public class ExStreamTest {
         Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
     }
 
-//
-//    @Test
-//    public void func_map() {
-//        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
-//                .map(x -> "A" + x)
-//                .stream()
-//                .collect(Collectors.toList());
-//        Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
-//    }
+    @Test
+    public void func_map() {
+        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
+                .map(x -> "A" + x)
+                .stream()
+                .collect(Collectors.toList());
+        Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
+    }
 
     @Test
     public void func_flatMap() {
@@ -99,15 +99,15 @@ public class ExStreamTest {
         Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
     }
 
-//
-//    @Test
-//    public void test_flatMap() {
-//        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
-//                .flatMap(x -> Stream.of("A" + x))
-//                .stream()
-//                .collect(Collectors.toList());
-//        Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
-//    }
+
+    @Test
+    public void test_flatMap() {
+        List<String> li = ExStream.of(Stream.of("1", "2", "3"))
+                .flatMap(x -> Stream.of("A" + x))
+                .stream()
+                .collect(Collectors.toList());
+        Assert.assertEquals(Lists.newArrayList("A1", "A2", "A3"), li);
+    }
 
     @Test
     public void takeWhile() {
@@ -213,6 +213,20 @@ public class ExStreamTest {
     public static class MemoizedClass {
         public String convert(Integer x) {
             return String.valueOf(x);
+        }
+    }
+
+    public static class Func {
+        public static <T> Function<Stream<T>, Stream<T>> filter(Predicate<? super T> predicate) {
+            return s -> s.filter(predicate);
+        }
+
+        public static <T, R> Function<Stream<T>, Stream<R>> map(Function<? super T, ? extends R> mapper) {
+            return s -> s.map(mapper);
+        }
+
+        public static <T, R> Function<Stream<T>, Stream<R>> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
+            return s -> s.flatMap(mapper);
         }
     }
 

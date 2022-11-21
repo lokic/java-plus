@@ -28,17 +28,17 @@ public class ExStream<T> {
         return new ExStream<>(function.apply(stream()));
     }
 
-//    public ExStream<T> filter(Predicate<? super T> predicate) {
-//        return new ExStream<>(stream().filter(predicate));
-//    }
-//
-//    public <R> ExStream<R> map(Function<? super T, ? extends R> mapper) {
-//        return new ExStream<>(stream().map(mapper));
-//    }
-//
-//    public <R> ExStream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
-//        return new ExStream<>(stream().flatMap(mapper));
-//    }
+    public ExStream<T> filter(Predicate<? super T> predicate) {
+        return new ExStream<>(stream().filter(predicate));
+    }
+
+    public <R> ExStream<R> map(Function<? super T, ? extends R> mapper) {
+        return new ExStream<>(stream().map(mapper));
+    }
+
+    public <R> ExStream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
+        return new ExStream<>(stream().flatMap(mapper));
+    }
 
     public ExStream<T> takeWhile(Predicate<? super T> predicate) {
         return new ExStream<>(Predicates.takeWhile(stream(), predicate));
@@ -108,21 +108,6 @@ public class ExStream<T> {
     @SuppressWarnings("varargs")
     public static <T> ExStream<T> of(T... values) {
         return new ExStream<>(Stream.of(values));
-    }
-
-
-    public static class Func {
-        public static <T> Function<Stream<T>, Stream<T>> filter(Predicate<? super T> predicate) {
-            return s -> s.filter(predicate);
-        }
-
-        public static <T, R> Function<Stream<T>, Stream<R>> map(Function<? super T, ? extends R> mapper) {
-            return s -> s.map(mapper);
-        }
-
-        public static <T, R> Function<Stream<T>, Stream<R>> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
-            return s -> s.flatMap(mapper);
-        }
     }
 
 }
