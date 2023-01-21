@@ -10,11 +10,15 @@ import lombok.Getter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class JoinType<T1, T2> {
+
+    private static final Comparator<?> CMP =
+            Comparator.comparing((IndexWithData<Tuple2<Integer, Integer>, ?> indexData) -> indexData.getIndex(),
+                    Comparator.comparing((Tuple2<Integer, Integer> t) -> t.getT1(), Comparator.nullsLast(Integer::compare))
+                            .thenComparing(Tuple2::getT2, Comparator.nullsLast(Integer::compare)));
 
     private final Stream<IndexWithData<Integer, Tuple2<T1, T2>>> leftWrappedStream;
     private final Stream<IndexWithData<Integer, Tuple2<T1, T2>>> rightWrappedStream;
@@ -28,21 +32,15 @@ public class JoinType<T1, T2> {
 
     public <K> JoinStream<Tuple2<T1, T2>> on(Function<T1, K> leftKey, Function<T2, K> rightKey) {
         Stream<Tuple2<T1, T2>> stream = Stream.concat(leftWrappedStream, rightWrappedStream)
-                .collect(Collectors.toMap(
+                .collect(Collectors.groupingBy(
                         t -> matchKey(t.getData(), leftKey, rightKey),
-                        Collections::singletonList,
-                        (a, b) -> {
-                            List<IndexWithData<Integer, Tuple2<T1, T2>>> li = new ArrayList<>();
-                            li.addAll(a);
-                            li.addAll(b);
-                            return li;
-                        },
-                        LinkedHashMap::new
+                        LinkedHashMap::new,
+                        Collectors.toList()
                 ))
                 .values()
                 .stream()
                 .flatMap(this::cartesian)
-                .sorted(this::compare)
+                .sorted(comparator())
                 .filter(t -> joinMatcher.test(t.getData()))
                 .map(IndexWithData::getData);
         return new JoinStream<>(stream);
@@ -56,9 +54,9 @@ public class JoinType<T1, T2> {
      */
     private Stream<IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>>> cartesian(List<IndexWithData<Integer, Tuple2<T1, T2>>> li) {
         Map<Boolean, List<IndexWithData<Integer, Tuple2<T1, T2>>>> map = li.stream()
-                .collect(Collectors.partitioningBy(t -> isLeft(t.getData()), this.toListOrNullList()));
-        List<IndexWithData<Integer, Tuple2<T1, T2>>> left = map.get(true);
-        List<IndexWithData<Integer, Tuple2<T1, T2>>> right = map.get(false);
+                .collect(Collectors.groupingBy(t -> isLeft(t.getData())));
+        List<IndexWithData<Integer, Tuple2<T1, T2>>> left = map.getOrDefault(true, NullData.nullList());
+        List<IndexWithData<Integer, Tuple2<T1, T2>>> right = map.getOrDefault(false, NullData.nullList());
         return left.stream()
                 .flatMap(l -> right.stream()
                         .map(r -> merge(l, r)));
@@ -75,63 +73,28 @@ public class JoinType<T1, T2> {
         return t.getT1() != null;
     }
 
-    private <K> K matchKey(Tuple2<T1, T2> t, Function<T1, K> leftKey, Function<T2, K> rightKey) {
+    private <K> Optional<K> matchKey(Tuple2<T1, T2> t, Function<T1, K> leftKey, Function<T2, K> rightKey) {
         if (t.getT1() != null) {
-            return leftKey.apply(t.getT1());
+            return Optional.ofNullable(leftKey.apply(t.getT1()));
         }
         if (t.getT2() != null) {
-            return rightKey.apply(t.getT2());
+            return Optional.ofNullable(rightKey.apply(t.getT2()));
         }
         throw new IllegalStateException("t1 == null and t2 == null");
     }
 
-    private <T> Collector<T, List<T>, List<T>> toListOrNullList() {
-        return Collector.of(
-                ArrayList::new,
-                List::add,
-                (left, right) -> {
-                    left.addAll(right);
-                    return left;
-                },
-                l -> {
-                    if (l == null || l.isEmpty()) {
-                        return NullData.nullList();
-                    }
-                    return l;
-                }
-        );
-    }
-
-    private int compare(IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>> a, IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>> b) {
-        Tuple2<Integer, Integer> aIndex = a.getIndex();
-        Tuple2<Integer, Integer> bIndex = b.getIndex();
-
-        int cmp = compare(aIndex.getT1(), bIndex.getT1());
-        if (cmp == 0) {
-            return compare(aIndex.getT2(), bIndex.getT2());
-        }
+    private Comparator<IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>>> comparator() {
+        @SuppressWarnings("unchecked")
+        Comparator<IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>>> cmp
+                = (Comparator<IndexWithData<Tuple2<Integer, Integer>, Tuple2<T1, T2>>>) CMP;
         return cmp;
-    }
-
-
-    private int compare(Integer a, Integer b) {
-        if (a == null && b == null) {
-            return 0;
-        }
-        if (a == null) {
-            return 1;
-        }
-        if (b == null) {
-            return -1;
-        }
-        return Integer.compare(a, b);
     }
 
     @AllArgsConstructor
     @Getter
     private static class IndexWithData<K, T> {
-        private K index;
-        private T data;
+        private final K index;
+        private final T data;
     }
 
 }

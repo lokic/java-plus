@@ -1,11 +1,12 @@
 package com.github.lokic.javaplus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class NullData {
-    private static final List<?> NULL_LIST = createNullList();
+    private static final List<?> NULL_LIST = Collections.unmodifiableList(createNullList());
 
     private static <T> List<T> createNullList() {
         List<T> li = new ArrayList<>();
