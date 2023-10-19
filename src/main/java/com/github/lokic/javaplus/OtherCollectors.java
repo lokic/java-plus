@@ -5,13 +5,11 @@ import com.github.lokic.javaplus.tuple.Tuple;
 import com.github.lokic.javaplus.tuple.Tuple2;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-public class Collectors {
+public class OtherCollectors {
 
     public static class Reversed {
 
@@ -193,4 +191,36 @@ public class Collectors {
                 java.util.stream.Collectors.toMap(keyMapper, valueMapper, mergeFunction, mapSupplier),
                 m -> m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue())));
     }
+
+
+    public static <T, A, R>
+    Collector<T, ?, R> filtering(Predicate<? super T> predicate,
+                                 Collector<? super T, A, R> downstream) {
+        BiConsumer<A, ? super T> downstreamAccumulator = downstream.accumulator();
+        return Collector.of(downstream.supplier(),
+                (r, t) -> {
+                    if (predicate.test(t)) {
+                        downstreamAccumulator.accept(r, t);
+                    }
+                },
+                downstream.combiner(), downstream.finisher(),
+                downstream.characteristics().toArray(new Collector.Characteristics[0]));
+    }
+
+    public static <T, U, A, R>
+    Collector<T, ?, R> flatMapping(Function<? super T, ? extends Stream<? extends U>> mapper,
+                                   Collector<? super U, A, R> downstream) {
+        BiConsumer<A, ? super U> downstreamAccumulator = downstream.accumulator();
+        return Collector.of(downstream.supplier(),
+                (r, t) -> {
+                    try (Stream<? extends U> result = mapper.apply(t)) {
+                        if (result != null)
+                            result.sequential().forEach(u -> downstreamAccumulator.accept(r, u));
+                    }
+                },
+                downstream.combiner(), downstream.finisher(),
+                downstream.characteristics().toArray(new Collector.Characteristics[0]));
+    }
+
+
 }
