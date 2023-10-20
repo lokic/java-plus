@@ -6,8 +6,11 @@ import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.entry;
@@ -69,6 +72,32 @@ public class OtherCollectorsTest {
                 Stream.of(Tuple.of("A", "A1"), Tuple.of("B", "B1"), Tuple.of("A", "A2"), Tuple.of("C", "C1"))
                         .collect(OtherCollectors.toMapEntryStream((k, v) -> k, (k, v) -> v, (a, b) -> a, HashMap::new))
         ).containsExactly(entry("A", "A1"), entry("B", "B1"), entry("C", "C1"));
+    }
+
+    @Test
+    public void testAveragingBigDecimal() {
+        BigDecimal res = Stream.of(new BigDecimal("2"), new BigDecimal("4"))
+                .collect(OtherCollectors.averagingBigDecimal(Function.identity(), 0, RoundingMode.HALF_UP));
+        Assertions.assertThat(res)
+                .isEqualByComparingTo(new BigDecimal("3"));
+
+        BigDecimal res2 = Stream.of(new BigDecimal("2"))
+                .collect(OtherCollectors.averagingBigDecimal(Function.identity(), 0, RoundingMode.HALF_UP));
+        Assertions.assertThat(res2)
+                .isEqualByComparingTo(new BigDecimal("2"));
+
+        BigDecimal res3 = Stream.<BigDecimal>of()
+                .collect(OtherCollectors.averagingBigDecimal(Function.identity(), 0, RoundingMode.HALF_UP));
+        Assertions.assertThat(res3)
+                .isEqualByComparingTo(new BigDecimal("0"));
+    }
+
+    @Test
+    public void testSummingBigDecimal() {
+        BigDecimal res = Stream.of(new BigDecimal("2"), new BigDecimal("4"))
+                .collect(OtherCollectors.summingBigDecimal(Function.identity()));
+        Assertions.assertThat(res)
+                .isEqualByComparingTo(new BigDecimal("6"));
     }
 
     @Data
