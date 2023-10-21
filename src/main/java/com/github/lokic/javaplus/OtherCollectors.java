@@ -307,10 +307,8 @@ public class OtherCollectors {
 
     public static <T> Collector<T, ?, BigDecimal> summingBigDecimal(Function<? super T, BigDecimal> mapper) {
         return new CollectorImpl<>(
-                () -> new BigDecimal[1],
-                (a, t) -> {
-                    a[0] = (a[0] == null ? BigDecimal.ZERO : a[0]).add(mapper.apply(t));
-                },
+                () -> new BigDecimal[]{BigDecimal.ZERO},
+                (a, t) -> a[0] = a[0].add(mapper.apply(t)),
                 (a, b) -> {
                     a[0] = a[0].add(b[0]);
                     return a;
@@ -321,17 +319,17 @@ public class OtherCollectors {
 
     public static <T> Collector<T, ?, BigDecimal> averagingBigDecimal(Function<? super T, BigDecimal> mapper, int scale, RoundingMode roundingMode) {
         return new CollectorImpl<>(
-                () -> new BigDecimal[2],
+                () -> new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO},
                 (a, t) -> {
-                    a[0] = (a[0] == null ? BigDecimal.ZERO : a[0]).add(mapper.apply(t));
-                    a[1] = (a[1] == null ? BigDecimal.ZERO : a[1]).add(BigDecimal.ONE);
+                    a[0] = a[0].add(mapper.apply(t));
+                    a[1] = a[1].add(BigDecimal.ONE);
                 },
                 (a, b) -> {
                     a[0] = a[0].add(b[0]);
                     a[1] = a[1].add(b[1]);
                     return a;
                 },
-                a -> (a[1] == null) ? BigDecimal.ZERO.setScale(scale, roundingMode) : a[0].divide(a[1], scale, roundingMode),
+                a -> (a[1].compareTo(BigDecimal.ZERO) == 0) ? BigDecimal.ZERO.setScale(scale, roundingMode) : a[0].divide(a[1], scale, roundingMode),
                 CH_NOID);
     }
 
