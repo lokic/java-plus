@@ -333,5 +333,23 @@ public class OtherCollectors {
                 CH_NOID);
     }
 
+    public static <T, K, U>
+    Collector<T, ?, Map<K, U>> toMapNullValue(Function<? super T, ? extends K> keyMapper,
+                                              Function<? super T, ? extends U> valueMapper) {
+        return new CollectorImpl<>(
+                LinkedHashMap::new,
+                (map, element) -> {
+                    K k = keyMapper.apply(element);
+                    if (map.containsValue(k)) {
+                        throw new IllegalStateException("Duplicate key");
+                    }
+                    map.put(keyMapper.apply(element), valueMapper.apply(element));
+                },
+                (m1, m2) -> {
+                    throw new UnsupportedOperationException("Not support merge");
+                },
+                CH_ID);
+    }
+
 
 }
