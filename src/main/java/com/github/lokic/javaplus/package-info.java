@@ -69,10 +69,10 @@
  *     <li>{@link com.github.lokic.javaplus.functional.tuple.TuplePredicate3}
  * </ul>
  * <p>
- * {@link com.github.lokic.javaplus.Collectors} 相关扩展：
+ * {@link com.github.lokic.javaplus.OtherCollectors} 相关扩展：
  * <ul>
- *     <li>{@link com.github.lokic.javaplus.Collectors.Reversed} 倒序
- *     <li>{@link com.github.lokic.javaplus.Collectors.Distinct} 去重
+ *     <li>{@link com.github.lokic.javaplus.OtherCollectors.Reversed} 倒序
+ *     <li>{@link com.github.lokic.javaplus.OtherCollectors.Distinct} 去重
  * </ul>
  * <p>
  * 其他：
